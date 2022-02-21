@@ -97,7 +97,7 @@ void evaluate_rates(const burn_t& state, rate_eval_t& rate_eval) {
     Real scor2, dscor2_dt, dscor2_dd;
 
 
-    screen5(pstate, 0, zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1], scor, dscor_dt, dscor_dd);
+    screen(pstate, 0, zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1], scor, dscor_dt, dscor_dd);
 
     rate_eval.unscreened_rates(i_scor,k_c12_c12__he4_ne20) = scor;
     rate_eval.unscreened_rates(i_dscor_dt,k_c12_c12__he4_ne20) = dscor_dt;
@@ -107,7 +107,7 @@ void evaluate_rates(const burn_t& state, rate_eval_t& rate_eval) {
     rate_eval.unscreened_rates(i_dscor_dt,k_c12_c12__p_na23) = dscor_dt;
 
 
-    screen5(pstate, 1, zion[He4-1], aion[He4-1], zion[C12-1], aion[C12-1], scor, dscor_dt, dscor_dd);
+    screen(pstate, 1, zion[He4-1], aion[He4-1], zion[C12-1], aion[C12-1], scor, dscor_dt, dscor_dd);
 
     rate_eval.unscreened_rates(i_scor,k_he4_c12__o16) = scor;
     rate_eval.unscreened_rates(i_dscor_dt,k_he4_c12__o16) = dscor_dt;

@@ -292,14 +292,14 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // first the always fun triple alpha and its inverse
     int jscr = 0;
-    screen5(state, jscr,
-            zion[He4-1], aion[He4-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[He4-1], aion[He4-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
     jscr++;
-    screen5(state, jscr,
-            zion[He4-1], aion[He4-1], 4.0e0_rt, 8.0e0_rt,
-            sc2a, sc2adt, sc2add);
+    screen(state, jscr,
+           zion[He4-1], aion[He4-1], 4.0e0_rt, 8.0e0_rt,
+           sc2a, sc2adt, sc2add);
 
     sc3a   = sc1a * sc2a;
     sc3adt = sc1adt*sc2a + sc1a*sc2adt;
@@ -323,9 +323,9 @@ void screen_aprox21 (Real btemp, Real bden,
     // c12 to o16
     // c12(a,g)o16
     jscr++;
-    screen5(state, jscr,
-            zion[C12-1], aion[C12-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[C12-1], aion[C12-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
     ratdum(ircag)     = ratraw(ircag) * sc1a;
     dratdumdt(ircag)  = dratrawdt(ircag)*sc1a + ratraw(ircag)*sc1adt;
@@ -339,9 +339,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // c12 + c12
     jscr++;
-    screen5(state, jscr,
-            zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1],
+           sc1a, sc1adt, sc1add);
 
 
     ratdum(ir1212)    = ratraw(ir1212) * sc1a;
@@ -357,9 +357,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // c12 + o16
     jscr++;
-    screen5(state, jscr,
-            zion[C12-1], aion[C12-1], zion[O16-1], aion[O16-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[C12-1], aion[C12-1], zion[O16-1], aion[O16-1],
+           sc1a, sc1adt, sc1add);
 
     ratdum(ir1216)    = ratraw(ir1216) * sc1a;
     dratdumdt(ir1216) = dratrawdt(ir1216)*sc1a + ratraw(ir1216)*sc1adt;
@@ -368,9 +368,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // o16 + o16
     jscr++;
-    screen5(state, jscr,
-            zion[O16-1], aion[O16-1], zion[O16-1], aion[O16-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[O16-1], aion[O16-1], zion[O16-1], aion[O16-1],
+           sc1a, sc1adt, sc1add);
 
 
     ratdum(ir1616)    = ratraw(ir1616) * sc1a;
@@ -386,9 +386,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // o16 to ne20
     jscr++;
-    screen5(state, jscr,
-            zion[O16-1], aion[O16-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[O16-1], aion[O16-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // o16(a,g)ne20
@@ -403,9 +403,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // ne20 to mg24
     jscr++;
-    screen5(state, jscr,
-            zion[Ne20-1], aion[Ne20-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Ne20-1], aion[Ne20-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // ne20(a,g)mg24
@@ -423,9 +423,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // mg24 to si28
     jscr++;
-    screen5(state, jscr,
-            zion[Mg24-1], aion[Mg24-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Mg24-1], aion[Mg24-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // mg24(a,g)si28
@@ -450,9 +450,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            13.0e0_rt, 27.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           13.0e0_rt, 27.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // al27(p,g)si28
     ratdum(iralpg)    = ratraw(iralpg) * sc1a;
@@ -468,9 +468,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // si28 to s32
     jscr++;
-    screen5(state, jscr,
-            zion[Si28-1], aion[Si28-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Si28-1], aion[Si28-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // si28(a,g)s32
@@ -495,9 +495,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            15.0e0_rt, 31.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           15.0e0_rt, 31.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // p31(p,g)s32
     ratdum(irppg)     = ratraw(irppg) * sc1a;
@@ -512,9 +512,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // s32 to ar36
     jscr++;
-    screen5(state, jscr,
-            zion[S32-1], aion[S32-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[S32-1], aion[S32-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // s32(a,g)ar36
@@ -537,9 +537,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            17.0e0_rt, 35.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           17.0e0_rt, 35.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // cl35(p,g)ar36
     ratdum(irclpg)    = ratraw(irclpg) * sc1a;
@@ -555,9 +555,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // ar36 to ca40
     jscr++;
-    screen5(state, jscr,
-            zion[Ar36-1], aion[Ar36-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Ar36-1], aion[Ar36-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // ar36(a,g)ca40
@@ -582,9 +582,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            19.0e0_rt, 39.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           19.0e0_rt, 39.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // k39(p,g)ca40
     ratdum(irkpg)     = ratraw(irkpg) * sc1a;
@@ -600,9 +600,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // ca40 to ti44
     jscr++;
-    screen5(state, jscr,
-            zion[Ca40-1], aion[Ca40-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Ca40-1], aion[Ca40-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // ca40(a,g)ti44
@@ -627,9 +627,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            21.0e0_rt, 43.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           21.0e0_rt, 43.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // sc43(p,g)ti44
     ratdum(irscpg)    = ratraw(irscpg) * sc1a;
@@ -644,9 +644,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // ti44 to cr48
     jscr++;
-    screen5(state, jscr,
-            zion[Ti44-1], aion[Ti44-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Ti44-1], aion[Ti44-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // ti44(a,g)cr48
@@ -669,9 +669,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            23.0e0_rt, 47.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           23.0e0_rt, 47.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // v47(p,g)cr48
     ratdum(irvpg)     = ratraw(irvpg) * sc1a;
@@ -686,9 +686,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // cr48 to fe52
     jscr++;
-    screen5(state, jscr,
-            zion[Cr48-1], aion[Cr48-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Cr48-1], aion[Cr48-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // cr48(a,g)fe52
@@ -713,9 +713,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            25.0e0_rt, 51.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           25.0e0_rt, 51.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // mn51(p,g)fe52
     ratdum(irmnpg)    = ratraw(irmnpg) * sc1a;
@@ -729,9 +729,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // fe to ni
     jscr++;
-    screen5(state, jscr,
-            zion[Fe52-1], aion[Fe52-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Fe52-1], aion[Fe52-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // fe52(a,g)ni56
@@ -755,9 +755,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            27.0e0_rt, 55.0e0_rt, 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           27.0e0_rt, 55.0e0_rt, 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
 
     // co55(p,g)ni56
@@ -771,9 +771,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            zion[Fe54-1], aion[Fe54-1], 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Fe54-1], aion[Fe54-1], 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // fe54(p,g)co55
     ratdum(irfepg)    = ratraw(irfepg) * sc1a;
@@ -788,9 +788,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // fe54(a,p)co57(g,p)fe56
     jscr++;
-    screen5(state, jscr,
-            zion[Fe54-1], aion[Fe54-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Fe54-1], aion[Fe54-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
 
     // fe54(a,p)co57
@@ -804,9 +804,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            zion[Fe56-1], aion[Fe56-1], 1.0e0_rt, 1.0e0_rt,
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[Fe56-1], aion[Fe56-1], 1.0e0_rt, 1.0e0_rt,
+           sc1a, sc1adt, sc1add);
 
     // fe56(p,g)co57
     ratdum(irfe56pg)    = ratraw(irfe56pg) * sc1a;
@@ -821,9 +821,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // d(p,g)he4
     jscr++;
-    screen5(state, jscr,
-            1.0e0_rt, 2.0e0_rt, zion[H1-1], aion[H1-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           1.0e0_rt, 2.0e0_rt, zion[H1-1], aion[H1-1],
+           sc1a, sc1adt, sc1add);
 
 
     // d(p,g)he3
@@ -839,9 +839,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // pp
     jscr++;
-    screen5(state, jscr,
-            zion[H1-1], aion[H1-1], zion[H1-1], aion[H1-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[H1-1], aion[H1-1], zion[H1-1], aion[H1-1],
+           sc1a, sc1adt, sc1add);
 
     ratdum(irpp)    = ratraw(irpp) * sc1a;
     dratdumdt(irpp) = dratrawdt(irpp)*sc1a + ratraw(irpp)*sc1adt;
@@ -856,9 +856,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // he3 + he3
     jscr++;
-    screen5(state, jscr,
-            zion[He3-1], aion[He3-1], zion[He3-1], aion[He3-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[He3-1], aion[He3-1], zion[He3-1], aion[He3-1],
+           sc1a, sc1adt, sc1add);
 
     // he3(he3,2p)he4
     ratdum(ir33)    = ratraw(ir33) * sc1a;
@@ -874,9 +874,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
     // he3 + he4
     jscr++;
-    screen5(state, jscr,
-            zion[He3-1], aion[He3-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[He3-1], aion[He3-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
     // he3(he4,g)be7
     ratdum(irhe3ag)    = ratraw(irhe3ag) * sc1a;
@@ -888,9 +888,9 @@ void screen_aprox21 (Real btemp, Real bden,
     // cno cycles
 
     jscr++;
-    screen5(state, jscr,
-            zion[C12-1], aion[C12-1], zion[H1-1], aion[H1-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[C12-1], aion[C12-1], zion[H1-1], aion[H1-1],
+           sc1a, sc1adt, sc1add);
 
     // c12(p,g)13n
     ratdum(ircpg)    = ratraw(ircpg) * sc1a;
@@ -899,9 +899,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            zion[N14-1], aion[N14-1], zion[H1-1], aion[H1-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[N14-1], aion[N14-1], zion[H1-1], aion[H1-1],
+           sc1a, sc1adt, sc1add);
 
     // n14(p,g)o15
     ratdum(irnpg)    = ratraw(irnpg) * sc1a;
@@ -910,9 +910,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            zion[O16-1], aion[O16-1], zion[H1-1], aion[H1-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[O16-1], aion[O16-1], zion[H1-1], aion[H1-1],
+           sc1a, sc1adt, sc1add);
 
 
     // o16(p,g)f17
@@ -922,9 +922,9 @@ void screen_aprox21 (Real btemp, Real bden,
 
 
     jscr++;
-    screen5(state, jscr,
-            zion[N14-1], aion[N14-1], zion[He4-1], aion[He4-1],
-            sc1a, sc1adt, sc1add);
+    screen(state, jscr,
+           zion[N14-1], aion[N14-1], zion[He4-1], aion[He4-1],
+           sc1a, sc1adt, sc1add);
 
     // n14(a,g)f18
     ratdum(irnag)    = ratraw(irnag) * sc1a;

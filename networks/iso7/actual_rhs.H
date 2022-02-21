@@ -23,7 +23,7 @@
 using namespace amrex;
 using namespace ArrayUtil;
 
-void actual_rhs_init();
+void jctual_rhs_init();
 
 namespace RateTable
 {
@@ -412,14 +412,14 @@ void screen_iso7(const Real btemp, const Real bden,
 
     // first the always fun triple alpha and its inverse
     jscr = 0;
-    screen5(pstate,jscr,
-            zion[He4-1], aion[He4-1], zion[He4-1], aion[He4-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[He4-1], aion[He4-1], zion[He4-1], aion[He4-1],
+           sc1a,sc1adt,sc1add);
 
     jscr++;
-    screen5(pstate,jscr,
-            zion[He4-1], aion[He4-1], zion[Be8-1], aion[Be8-1],
-            sc2a,sc2adt,sc2add);
+    screen(pstate,jscr,
+           zion[He4-1], aion[He4-1], zion[Be8-1], aion[Be8-1],
+           sc2a,sc2adt,sc2add);
 
     sc3a   = sc1a * sc2a;
     sc3adt = sc1adt*sc2a + sc1a*sc2adt;
@@ -429,27 +429,27 @@ void screen_iso7(const Real btemp, const Real bden,
 
     // c12 to o16
     jscr++;
-    screen5(pstate,jscr,
-            zion[C12-1], aion[C12-1], zion[He4-1], aion[He4-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[C12-1], aion[C12-1], zion[He4-1], aion[He4-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(C12_He4_to_O16)  = dratedt.forward(C12_He4_to_O16) * sc1a + rate.forward(C12_He4_to_O16) * sc1adt;
     rate.forward(C12_He4_to_O16)     = rate.forward(C12_He4_to_O16) * sc1a;
 
     // c12 + c12
     jscr++;
-    screen5(pstate,jscr,
-            zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(C12_C12_to_Ne20_He4) = dratedt.forward(C12_C12_to_Ne20_He4) * sc1a + rate.forward(C12_C12_to_Ne20_He4) * sc1adt;
     rate.forward(C12_C12_to_Ne20_He4)    = rate.forward(C12_C12_to_Ne20_He4) * sc1a;
 
     // c12 + o16
     jscr++;
-    screen5(pstate,jscr,
-            zion[C12-1], aion[C12-1], zion[O16-1], aion[O16-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[C12-1], aion[C12-1], zion[O16-1], aion[O16-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(C12_O16_to_Mg24_He4) = dratedt.forward(C12_O16_to_Mg24_He4) * sc1a + rate.forward(C12_O16_to_Mg24_He4) * sc1adt;
     rate.forward(C12_O16_to_Mg24_He4)    = rate.forward(C12_O16_to_Mg24_He4) * sc1a;
@@ -464,45 +464,45 @@ void screen_iso7(const Real btemp, const Real bden,
 
     // o16 + o16
     jscr++;
-    screen5(pstate,jscr,
-            zion[O16-1], aion[O16-1], zion[O16-1], aion[O16-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[O16-1], aion[O16-1], zion[O16-1], aion[O16-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(O16_O16_to_Si28_He4) = dratedt.forward(O16_O16_to_Si28_He4) * sc1a + rate.forward(O16_O16_to_Si28_He4) * sc1adt;
     rate.forward(O16_O16_to_Si28_He4)    = rate.forward(O16_O16_to_Si28_He4) * sc1a;
 
     // o16 to ne20
     jscr++;
-    screen5(pstate,jscr,
-            zion[O16-1], aion[O16-1], zion[He4-1], aion[He4-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[O16-1], aion[O16-1], zion[He4-1], aion[He4-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(O16_He4_to_Ne20) = dratedt.forward(O16_He4_to_Ne20) * sc1a + rate.forward(O16_He4_to_Ne20) * sc1adt;
     rate.forward(O16_He4_to_Ne20)    = rate.forward(O16_He4_to_Ne20) * sc1a;
 
     // ne20 to mg24
     jscr++;
-    screen5(pstate,jscr,
-            zion[Ne20-1], aion[Ne20-1], zion[He4-1], aion[He4-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[Ne20-1], aion[Ne20-1], zion[He4-1], aion[He4-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(Ne20_He4_to_Mg24) = dratedt.forward(Ne20_He4_to_Mg24) * sc1a + rate.forward(Ne20_He4_to_Mg24) * sc1adt;
     rate.forward(Ne20_He4_to_Mg24)    = rate.forward(Ne20_He4_to_Mg24) * sc1a;
 
     // mg24 to si28
     jscr++;
-    screen5(pstate,jscr,
-            zion[Mg24-1], aion[Mg24-1], zion[He4-1], aion[He4-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[Mg24-1], aion[Mg24-1], zion[He4-1], aion[He4-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(Mg24_He4_to_Si28) = dratedt.forward(Mg24_He4_to_Si28) * sc1a + rate.forward(Mg24_He4_to_Si28) * sc1adt;
     rate.forward(Mg24_He4_to_Si28)    = rate.forward(Mg24_He4_to_Si28) * sc1a;
 
     // ca40 to ti44
     jscr++;
-    screen5(pstate,jscr,
-            zion[Ca40-1], aion[Ca40-1], zion[He4-1], aion[He4-1],
-            sc1a,sc1adt,sc1add);
+    screen(pstate,jscr,
+           zion[Ca40-1], aion[Ca40-1], zion[He4-1], aion[He4-1],
+           sc1a,sc1adt,sc1add);
 
     dratedt.forward(Ca40_He4_to_Ti44) = dratedt.forward(Ca40_He4_to_Ti44) * sc1a + rate.forward(Ca40_He4_to_Ti44) * sc1adt;
     rate.forward(Ca40_He4_to_Ti44)    = rate.forward(Ca40_He4_to_Ti44) * sc1a;

@@ -69,7 +69,7 @@ void get_rates (const burn_t& state, Real& rate, Real& dratedt, Real& sc1212, Re
     int jscr = 0;
 
     Real dsc1212dd;
-    screen5(pstate, jscr,
+    screen(pstate, jscr,
             zion[C12-1], aion[C12-1], zion[C12-1], aion[C12-1],
             sc1212, dsc1212dt, dsc1212dd);
 

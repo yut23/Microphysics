@@ -602,7 +602,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     {
@@ -611,7 +611,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  4.0_rt,
                                                                                  8.0_rt);
 
-        screen5(state, scn_fac, sc2a, sc2adt, sc2add);
+        screen(state, scn_fac, sc2a, sc2adt, sc2add);
     }
 
     sc3a   = sc1a * sc2a;
@@ -633,7 +633,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     ratraw = rr(1).rates(C12_He4_to_O16_forward);
@@ -651,7 +651,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(C12),
                                                                                  NetworkProperties::aion(C12));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     ratraw = rr(1).rates(C12_C12_to_Ne20_He4_forward);
@@ -665,7 +665,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(O16),
                                                                                  NetworkProperties::aion(O16));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     ratraw = rr(1).rates(C12_O16_to_Mg24_He4_forward);
@@ -687,7 +687,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(O16),
                                                                                  NetworkProperties::aion(O16));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     ratraw = rr(1).rates(O16_O16_to_Si28_He4_forward);
@@ -704,7 +704,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -724,7 +724,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -744,7 +744,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -773,7 +773,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // al27(p,g)si28
@@ -793,7 +793,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -823,7 +823,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // p31(p,g)s32
@@ -843,7 +843,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -872,7 +872,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // cl35(p,g)ar36
@@ -892,7 +892,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -922,7 +922,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // k39(p,g)ca40
@@ -942,7 +942,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -972,7 +972,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // sc43(p,g)ti44
@@ -992,7 +992,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -1021,7 +1021,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // v47(p,g)cr48
@@ -1041,7 +1041,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -1071,7 +1071,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
     // mn51(p,g)fe52
@@ -1091,7 +1091,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  NetworkProperties::zion(He4),
                                                                                  NetworkProperties::aion(He4));
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
@@ -1121,7 +1121,7 @@ void screen_aprox13(const Real btemp, const Real bden,
                                                                                  1.0_rt,
                                                                                  1.0_rt);
 
-        screen5(state, scn_fac, sc1a, sc1adt, sc1add);
+        screen(state, scn_fac, sc1a, sc1adt, sc1add);
     }
 
 
