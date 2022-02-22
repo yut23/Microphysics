@@ -23,7 +23,7 @@
 using namespace amrex;
 using namespace ArrayUtil;
 
-void jctual_rhs_init();
+void actual_rhs_init();
 
 namespace RateTable
 {
