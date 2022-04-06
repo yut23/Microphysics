@@ -22,6 +22,7 @@ namespace scrn {
       // zhat2   = combination of z1 and z2 raised to the 5/12 power
       // lzav    = log of effective charge
       // aznut   = combination of a1,z1,a2,z2 raised to 1/3 power
+      // ztilde  = effective ion radius factor for a MCP
 
       amrex::Real zs13 = 0.0;
       amrex::Real zs13inv = 0.0;
