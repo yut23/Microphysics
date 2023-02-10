@@ -333,13 +333,15 @@ void screen_test_C(const Box& bx,
       ymass(n+1) = xn[n] / aion[n];
     }
 
-    Real temp_zone = std::pow(10.0, std::log10(temp_min) + static_cast<Real>(j)*dlogT);
+    autodiff::dual temp_zone = std::pow(10.0, std::log10(temp_min) + static_cast<Real>(j)*dlogT);
+    // seed the dual number for temperature before calculating anything with it
+    autodiff::detail::seed<1>(temp_zone, 1.0);
 
     Real dens_zone = std::pow(10.0, std::log10(dens_min) + static_cast<Real>(i)*dlogrho);
 
     // store default state
     sp(i, j, k, vars.irho) = dens_zone;
-    sp(i, j, k, vars.itemp) = temp_zone;
+    sp(i, j, k, vars.itemp) = temp_zone.val;
     for (int n = 0; n < NumSpec; n++) {
       sp(i, j, k, vars.ispec+n) = xn[n];
     }

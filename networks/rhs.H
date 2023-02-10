@@ -1276,7 +1276,10 @@ void rhs (burn_t& burn_state, Array1D<Real, 1, nrhs>& ydot)
     }
 
     // Set up the state data, which is the same for all screening factors.
-    fill_plasma_state(rhs_state.pstate, burn_state.T, burn_state.rho, rhs_state.y);
+    autodiff::dual temp = burn_state.T;
+    // seed the dual number for temperature before calculating anything with it
+    autodiff::detail::seed<1>(temp, 1.0);
+    fill_plasma_state(rhs_state.pstate, temp, burn_state.rho, rhs_state.y);
 
     // Initialize the rate temperature term.
     rhs_state.tf = get_tfactors(burn_state.T);
@@ -1415,7 +1418,10 @@ void jac (burn_t& burn_state, ArrayUtil::MathArray2D<1, neqs, 1, neqs>& jac)
     }
 
     // Set up the state data, which is the same for all screening factors.
-    fill_plasma_state(rhs_state.pstate, burn_state.T, burn_state.rho, rhs_state.y);
+    autodiff::dual temp = burn_state.T;
+    // seed the dual number for temperature before calculating anything with it
+    autodiff::detail::seed<1>(temp, 1.0);
+    fill_plasma_state(rhs_state.pstate, temp, burn_state.rho, rhs_state.y);
 
     // Initialize the rate temperature term.
     rhs_state.tf = get_tfactors(burn_state.T);
