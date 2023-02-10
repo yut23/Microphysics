@@ -16,6 +16,33 @@
 
 using namespace amrex;
 
+constexpr scrn::screen_factors_t make_screening_combination(const Species::NetworkSpecies nuc_1, const Species::NetworkSpecies nuc_2)
+{
+  const Real Z1 = NetworkProperties::zion(nuc_1);
+  const Real A1 = NetworkProperties::aion(nuc_1);
+
+  const Real Z2 = NetworkProperties::zion(nuc_2);
+  const Real A2 = NetworkProperties::aion(nuc_2);
+
+  return scrn::calculate_screen_factor(Z1, A1, Z2, A2);
+}
+
+constexpr scrn::screen_factors_t make_screening_combination(const Real Z1, const Real A1, const Species::NetworkSpecies nuc_2)
+{
+  const Real Z2 = NetworkProperties::zion(nuc_2);
+  const Real A2 = NetworkProperties::aion(nuc_2);
+
+  return scrn::calculate_screen_factor(Z1, A1, Z2, A2);
+}
+
+constexpr scrn::screen_factors_t make_screening_combination(const Species::NetworkSpecies nuc_1, const Real Z2, const Real A2)
+{
+  const Real Z1 = NetworkProperties::zion(nuc_1);
+  const Real A1 = NetworkProperties::aion(nuc_1);
+
+  return scrn::calculate_screen_factor(Z1, A1, Z2, A2);
+}
+
 void screen_test_C(const Box& bx,
                    const Real dlogrho, const Real dlogT, const Real dmetal,
                    const plot_t vars,
@@ -77,526 +104,210 @@ void screen_test_C(const Box& bx,
 
   // 3-alpha
   {
-    constexpr Real Z1 = NetworkProperties::zion(He4);
-    constexpr Real A1 = NetworkProperties::aion(He4);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    // Require scn_fac to be evaluated at compile time
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(He4, He4);
     screen_factors[vars.iscn_he4_he4] = scn_fac;
   }
 
   {
-    constexpr Real Z1 = NetworkProperties::zion(He4);
-    constexpr Real A1 = NetworkProperties::aion(He4);
-
-    constexpr Real Z2 = 4.0_rt;
-    constexpr Real A2 = 8.0_rt;
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(He4, 4.0_rt, 8.0_rt);
     screen_factors[vars.iscn_he4_be8] = scn_fac;
   }
 
   // c12(a,g)o16
   {
-    constexpr Real Z1 = NetworkProperties::zion(C12);
-    constexpr Real A1 = NetworkProperties::aion(C12);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(C12, He4);
     screen_factors[vars.iscn_c12_he4] = scn_fac;
   }
 
   // c12 + c12
   {
-    constexpr Real Z1 = NetworkProperties::zion(C12);
-    constexpr Real A1 = NetworkProperties::aion(C12);
-
-    constexpr Real Z2 = NetworkProperties::zion(C12);
-    constexpr Real A2 = NetworkProperties::aion(C12);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(C12, C12);
     screen_factors[vars.iscn_c12_c12] = scn_fac;
   }
 
   // c12 + o16
   {
-    constexpr Real Z1 = NetworkProperties::zion(C12);
-    constexpr Real A1 = NetworkProperties::aion(C12);
-
-    constexpr Real Z2 = NetworkProperties::zion(O16);
-    constexpr Real A2 = NetworkProperties::aion(O16);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(C12, O16);
     screen_factors[vars.iscn_c12_o16] = scn_fac;
   }
 
   // o16 + o16
   {
-    constexpr Real Z1 = NetworkProperties::zion(O16);
-    constexpr Real A1 = NetworkProperties::aion(O16);
-
-    constexpr Real Z2 = NetworkProperties::zion(O16);
-    constexpr Real A2 = NetworkProperties::aion(O16);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(O16, O16);
     screen_factors[vars.iscn_o16_o16] = scn_fac;
   }
 
   // o16 + he4
   {
-    constexpr Real Z1 = NetworkProperties::zion(O16);
-    constexpr Real A1 = NetworkProperties::aion(O16);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(O16, He4);
     screen_factors[vars.iscn_o16_he4] = scn_fac;
   }
 
   // ne20(a,g)mg24
   {
-    constexpr Real Z1 = NetworkProperties::zion(Ne20);
-    constexpr Real A1 = NetworkProperties::aion(Ne20);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Ne20, He4);
     screen_factors[vars.iscn_ne20_he4] = scn_fac;
   }
 
   // mg24(a,g)si28
   {
-    constexpr Real Z1 = NetworkProperties::zion(Mg24);
-    constexpr Real A1 = NetworkProperties::aion(Mg24);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Mg24, He4);
     screen_factors[vars.iscn_mg24_he4] = scn_fac;
   }
 
   // al27(p,g)si28
   {
-    constexpr Real Z1 = 13.0_rt;
-    constexpr Real A1 = 27.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(13.0_rt, 27.0_rt, H1);
     screen_factors[vars.iscn_al27_p] = scn_fac;
   }
 
   // si28 + he4
   {
-    constexpr Real Z1 = NetworkProperties::zion(Si28);
-    constexpr Real A1 = NetworkProperties::aion(Si28);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Si28, He4);
     screen_factors[vars.iscn_si28_he4] = scn_fac;
   }
 
   // p31(p,g)s32
   {
-    constexpr Real Z1 = 15.0_rt;
-    constexpr Real A1 = 31.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(15.0_rt, 31.0_rt, H1);
     screen_factors[vars.iscn_p31_p] = scn_fac;
   }
 
   // s32 to ar36
   {
-    constexpr Real Z1 = NetworkProperties::zion(S32);
-    constexpr Real A1 = NetworkProperties::aion(S32);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(S32, He4);
     screen_factors[vars.iscn_s32_he4] = scn_fac;
   }
 
   // cl35(p,g)ar36
   {
-    constexpr Real Z1 = 17.0_rt;
-    constexpr Real A1 = 35.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(17.0_rt, 35.0_rt, H1);
     screen_factors[vars.iscn_cl35_p] = scn_fac;
   }
 
   // ar36 to ca40
   {
-    constexpr Real Z1 = NetworkProperties::zion(Ar36);
-    constexpr Real A1 = NetworkProperties::aion(Ar36);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Ar36, He4);
     screen_factors[vars.iscn_ar36_he4] = scn_fac;
   }
 
   // k39(p,g)ca40
   {
-    constexpr Real Z1 = 19.0_rt;
-    constexpr Real A1 = 39.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(19.0_rt, 39.0_rt, H1);
     screen_factors[vars.iscn_k39_p] = scn_fac;
   }
 
   // ca40 to ti44
   {
-    constexpr Real Z1 = NetworkProperties::zion(Ca40);
-    constexpr Real A1 = NetworkProperties::aion(Ca40);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Ca40, He4);
     screen_factors[vars.iscn_ca40_he4] = scn_fac;
   }
 
   // sc43(p,g)ti44
   {
-    constexpr Real Z1 = 21.0_rt;
-    constexpr Real A1 = 43.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(21.0_rt, 43.0_rt, H1);
     screen_factors[vars.iscn_sc43_p] = scn_fac;
   }
 
   // ti44 to cr48
   {
-    constexpr Real Z1 = NetworkProperties::zion(Ti44);
-    constexpr Real A1 = NetworkProperties::aion(Ti44);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Ti44, He4);
     screen_factors[vars.iscn_ti44_he4] = scn_fac;
   }
 
   // v47(p,g)cr48
   {
-    constexpr Real Z1 = 23.0_rt;
-    constexpr Real A1 = 47.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(23.0_rt, 47.0_rt, H1);
     screen_factors[vars.iscn_v47_p] = scn_fac;
   }
 
   // cr48 to fe52
   {
-    constexpr Real Z1 = NetworkProperties::zion(Cr48);
-    constexpr Real A1 = NetworkProperties::aion(Cr48);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Cr48, He4);
     screen_factors[vars.iscn_cr48_he4] = scn_fac;
   }
 
   // mn51(p,g)fe52
   {
-    constexpr Real Z1 = 25.0_rt;
-    constexpr Real A1 = 51.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(25.0_rt, 51.0_rt, H1);
     screen_factors[vars.iscn_mn51_p] = scn_fac;
   }
 
   // fe to ni
   {
-    constexpr Real Z1 = NetworkProperties::zion(Fe52);
-    constexpr Real A1 = NetworkProperties::aion(Fe52);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Fe52, He4);
     screen_factors[vars.iscn_fe52_he4] = scn_fac;
   }
 
   // co55(p,g)ni56
   {
-    constexpr Real Z1 = 27.0_rt;
-    constexpr Real A1 = 55.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(27.0_rt, 55.0_rt, H1);
     screen_factors[vars.iscn_co55_p] = scn_fac;
   }
 
   // fe54(p,g)co55
   {
-    constexpr Real Z1 = NetworkProperties::zion(Fe54);
-    constexpr Real A1 = NetworkProperties::aion(Fe54);
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Fe54, H1);
     screen_factors[vars.iscn_fe54_p] = scn_fac;
   }
 
   // fe54(a,p)co57
   {
-    constexpr Real Z1 = NetworkProperties::zion(Fe54);
-    constexpr Real A1 = NetworkProperties::aion(Fe54);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Fe54, He4);
     screen_factors[vars.iscn_fe54_he4] = scn_fac;
   }
 
   // fe56(p,g)co57
   {
-    constexpr Real Z1 = NetworkProperties::zion(Fe56);
-    constexpr Real A1 = NetworkProperties::aion(Fe56);
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(Fe56, H1);
     screen_factors[vars.iscn_fe56_p] = scn_fac;
   }
 
   // d + p
   {
-    constexpr Real Z1 = 1.0_rt;
-    constexpr Real A1 = 2.0_rt;
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(1.0_rt, 2.0_rt, H1);
     screen_factors[vars.iscn_d_p] = scn_fac;
   }
 
   // pp
   {
-    constexpr Real Z1 = NetworkProperties::zion(H1);
-    constexpr Real A1 = NetworkProperties::aion(H1);
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(H1, H1);
     screen_factors[vars.iscn_p_p] = scn_fac;
   }
 
   // he3 + he3
   {
-    constexpr Real Z1 = NetworkProperties::zion(He3);
-    constexpr Real A1 = NetworkProperties::aion(He3);
-
-    constexpr Real Z2 = NetworkProperties::zion(He3);
-    constexpr Real A2 = NetworkProperties::aion(He3);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(He3, He3);
     screen_factors[vars.iscn_he3_he3] = scn_fac;
   }
 
   // he3 + he4
   {
-    constexpr Real Z1 = NetworkProperties::zion(He3);
-    constexpr Real A1 = NetworkProperties::aion(He3);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(He3, He4);
     screen_factors[vars.iscn_he3_he4] = scn_fac;
   }
 
   // c12(p,g)n13
   {
-    constexpr Real Z1 = NetworkProperties::zion(C12);
-    constexpr Real A1 = NetworkProperties::aion(C12);
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(C12, H1);
     screen_factors[vars.iscn_c12_p] = scn_fac;
   }
 
   // n14(p,g)o15
   {
-    constexpr Real Z1 = NetworkProperties::zion(N14);
-    constexpr Real A1 = NetworkProperties::aion(N14);
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(N14, H1);
     screen_factors[vars.iscn_n14_p] = scn_fac;
   }
 
   // o16(p,g)f17
   {
-    constexpr Real Z1 = NetworkProperties::zion(O16);
-    constexpr Real A1 = NetworkProperties::aion(O16);
-
-    constexpr Real Z2 = NetworkProperties::zion(H1);
-    constexpr Real A2 = NetworkProperties::aion(H1);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(O16, H1);
     screen_factors[vars.iscn_o16_p] = scn_fac;
   }
 
   // n14(a,g)f18
   {
-    constexpr Real Z1 = NetworkProperties::zion(N14);
-    constexpr Real A1 = NetworkProperties::aion(N14);
-
-    constexpr Real Z2 = NetworkProperties::zion(He4);
-    constexpr Real A2 = NetworkProperties::aion(He4);
-
-    constexpr auto scn_fac = scrn::calculate_screen_factor(Z1, A1, Z2, A2);
-
-    static_assert(scn_fac.z1 == Z1);
-
+    constexpr auto scn_fac = make_screening_combination(N14, He4);
     screen_factors[vars.iscn_n14_he4] = scn_fac;
   }
 
