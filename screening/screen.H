@@ -30,14 +30,10 @@ const std::string screen_name = "chabrier1998";
 #endif
 
 struct plasma_state_t {
-
-  autodiff::dual qlam0z;
-
-  autodiff::dual taufac;
-
-  autodiff::dual aa;
-
-  autodiff::dual temp;
+  autodiff::number_t qlam0z;
+  autodiff::number_t taufac;
+  autodiff::number_t aa;
+  autodiff::number_t temp;
   Real zbar;
   Real z2bar;
   Real n_e;
@@ -163,10 +159,10 @@ fill_plasma_state(plasma_state_t& state, const dual_t temp, const Real dens, Arr
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
 void
-fill_plasma_state(plasma_state_t& state, const autodiff::dual temp, const Real dens, Array1D<Real, 1, NumSpec> const& y) {
+fill_plasma_state(plasma_state_t& state, const autodiff::number_t temp, const Real dens, Array1D<Real, 1, NumSpec> const& y) {
     // temp will be automatically upcast from a Real if necessary
     if (jacobian == 1) {
-        fill_plasma_state<autodiff::dual>(state, temp, dens, y);
+        fill_plasma_state<autodiff::number_t>(state, temp, dens, y);
     } else {
         fill_plasma_state<amrex::Real>(state, autodiff::val(temp), dens, y);
     }
@@ -668,12 +664,12 @@ dual_t actual_screen(const plasma_state_t& state,
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-autodiff::dual actual_screen(const plasma_state_t& state,
-                             const scrn::screen_factors_t& scn_fac)
+autodiff::number_t actual_screen(const plasma_state_t& state,
+                                 const scrn::screen_factors_t& scn_fac)
 {
-    autodiff::dual scor;
+    autodiff::number_t scor;
     if (jacobian == 1) {
-        scor = actual_screen<autodiff::dual>(state, scn_fac);
+        scor = actual_screen<autodiff::number_t>(state, scn_fac);
     } else {
         scor = actual_screen<amrex::Real>(state, scn_fac);
     }
@@ -685,8 +681,8 @@ void actual_screen(const plasma_state_t& state,
                    const scrn::screen_factors_t& scn_fac,
                    Real& scor, Real& scordt)
 {
-    autodiff::dual scor_dual = actual_screen(state, scn_fac);
-    scor = autodiff::val(scor_dual);
+    autodiff::number_t scor_dual = actual_screen(state, scn_fac);
+    scor = static_cast<Real>(scor_dual);
     scordt = autodiff::derivative<1>(scor_dual);
 }
 
@@ -721,10 +717,10 @@ namespace {
 // good for catching bugs with clang-tidy and ccls
 [[maybe_unused]] static void __lint_helper(const plasma_state_t& state, const scrn::screen_factors_t& scn_fac)
 {
-  actual_screen5<autodiff::dual>(state, scn_fac);
-  chugunov2007<autodiff::dual>(state, scn_fac);
-  chugunov2009<autodiff::dual>(state, scn_fac);
-  chabrier1998<autodiff::dual>(state, scn_fac);
+  actual_screen5<autodiff::number_t>(state, scn_fac);
+  chugunov2007<autodiff::number_t>(state, scn_fac);
+  chugunov2009<autodiff::number_t>(state, scn_fac);
+  chabrier1998<autodiff::number_t>(state, scn_fac);
   actual_screen5<amrex::Real>(state, scn_fac);
   chugunov2007<amrex::Real>(state, scn_fac);
   chugunov2009<amrex::Real>(state, scn_fac);
