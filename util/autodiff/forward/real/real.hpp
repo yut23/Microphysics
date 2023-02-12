@@ -498,8 +498,8 @@ constexpr auto pow(const Real<N, T>& x, const U& c)
         Real<N, T> a = c * log(x);
         For<1, N + 1>([&](auto i) constexpr {
             res[i] = Sum<0, i>([&](auto j) constexpr {
-                constexpr auto c = BinomialCoefficient<i.index - 1, j.index>;
-                return c * a[i - j] * res[j];
+                constexpr auto coeff = BinomialCoefficient<i.index - 1, j.index>;
+                return coeff * a[i - j] * res[j];
             });
         });
     }
@@ -518,8 +518,8 @@ constexpr auto pow(const U& c, const Real<N, T>& y)
         Real<N, T> a = y * log(c);
         For<1, N + 1>([&](auto i) constexpr {
             res[i] = Sum<0, i>([&](auto j) constexpr {
-                constexpr auto c = BinomialCoefficient<i.index - 1, j.index>;
-                return c * a[i - j] * res[j];
+                constexpr auto coeff = BinomialCoefficient<i.index - 1, j.index>;
+                return coeff * a[i - j] * res[j];
             });
         });
     }
@@ -909,7 +909,7 @@ auto repr(const Real<N, T>& x)
 {
     std::stringstream ss;
     ss << "autodiff.real(";
-    for(auto i = 0; i <= N; ++i)
+    for(size_t i = 0; i <= N; ++i)
         ss << (i == 0 ? "" : ", ") << x[i];
     ss << ")";
     return ss.str();
