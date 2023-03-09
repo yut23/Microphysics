@@ -8,7 +8,7 @@
 #include <extern_parameters.H>
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void actual_integrator (burn_t& state, const Real dt)
+void actual_integrator (burn_t<Real>& state, const Real dt)
 {
 
     be_t be;

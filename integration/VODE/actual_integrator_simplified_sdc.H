@@ -15,7 +15,7 @@
 #include <vode_dvode.H>
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void actual_integrator (burn_t& state, Real dt)
+void actual_integrator (burn_t<Real>& state, Real dt)
 {
 
     dvode_t vode_state;

@@ -51,7 +51,7 @@ void nonaka_init() {
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void nonaka_rhs(const Real time, const burn_t& state, const YdotNetArray1D& ydot_react) {
+void nonaka_rhs(const Real time, const burn_t<Real>& state, const YdotNetArray1D& ydot_react) {
 
     // state: the burn_t corresponding to the current state note:
     // state.time is relative to the start of the current burn call,

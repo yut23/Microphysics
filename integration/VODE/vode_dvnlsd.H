@@ -8,7 +8,7 @@
 #include <vode_dvjac.H>
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-Real dvnlsd (IArray1D& pivot, int& NFLAG, burn_t& state, dvode_t& vstate)
+Real dvnlsd (IArray1D& pivot, int& NFLAG, burn_t<Real>& state, dvode_t& vstate)
 {
 
     Real ACNRM = 1.e10_rt;

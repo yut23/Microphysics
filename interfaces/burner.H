@@ -17,7 +17,7 @@
 #endif
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void burner (burn_t& state, Real dt)
+void burner (burn_t<Real>& state, Real dt)
 {
 
 #ifndef TRUE_SDC

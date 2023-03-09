@@ -2,10 +2,11 @@
 #define VODE_TYPE_STRANG_H
 
 #include <eos.H>
+#include <burn_type.H>
 
 template <typename I>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void integrator_to_burn (const I& int_state, burn_t& state)
+void integrator_to_burn (const I& int_state, burn_t<Real>& state)
 {
     // Copy the integration data to the burn state.
 
@@ -21,7 +22,7 @@ void integrator_to_burn (const I& int_state, burn_t& state)
 
 template <typename I>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void burn_to_integrator (const burn_t& state, I& int_state)
+void burn_to_integrator (const burn_t<Real>& state, I& int_state)
 {
     // Copy the integration data from the burn state.
 
@@ -85,7 +86,7 @@ void clean_state (I& int_state)
 ///
 template <typename I>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void update_thermodynamics (burn_t& state, const I& int_state)
+void update_thermodynamics (burn_t<Real>& state, const I& int_state)
 {
 #ifdef AUX_THERMO
     // we are handling the thermodynamics via the aux quantities, which

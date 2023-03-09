@@ -9,6 +9,7 @@
 #include <eos_type.H>
 #include <eos_composition.H>
 #include <extern_parameters.H>
+#include <microphysics_autodiff.H>
 
 #include <ArrayUtilities.H>
 
@@ -77,6 +78,7 @@ const int SVAR_EVOLVE = SVAR;
 // we are doing simplified-SDC
 typedef ArrayUtil::MathArray2D<1, neqs, 1, neqs> JacNetArray2D;
 
+template <typename dual_t = amrex::Real>
 struct burn_t
 {
 
@@ -87,9 +89,9 @@ struct burn_t
   // this first group are the quantities the network RHS uses
 
   Real rho;
-  Real T;
+  dual_t T;
   Real e;
-  Real xn[NumSpec];
+  dual_t xn[NumSpec];
 #if NAUX_NET > 0
   Real aux[NumAux];
 #endif
@@ -168,8 +170,8 @@ struct burn_t
   Real mu_e;
   Real y_e;
   Real eta;
-  Real abar;
-  Real zbar;
+  dual_t abar;
+  dual_t zbar;
 
 #ifdef NSE_NET
   Real mu_p;
@@ -184,8 +186,9 @@ struct burn_t
 };
 
 
+template <typename dual_t>
 inline
-std::ostream& operator<< (std::ostream& o, burn_t const& burn_state)
+std::ostream& operator<< (std::ostream& o, burn_t<dual_t> const& burn_state)
 {
   o << std::setprecision(12);
   o << "rho = " << burn_state.rho << std::endl;
@@ -244,11 +247,94 @@ std::ostream& operator<< (std::ostream& o, burn_t const& burn_state)
 }
 
 
+// Copy data between different template specializations of burn_t
+template <typename dual_t, typename dest_t>
+AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
+void burn_to_burn(const burn_t<dual_t>& state, burn_t<dest_t>& new_state) {
+    new_state.time = state.time;
+
+    new_state.rho = state.rho;
+    new_state.T = static_cast<dest_t>(state.T);
+    new_state.e = state.e;
+    for (int i = 0; i < NumSpec; ++i) {
+        new_state.xn[i] = static_cast<dest_t>(state.xn[i]);
+    }
+#if NAUX_NET > 0
+    std::copy(std::begin(state.aux), std::end(state.aux), std::begin(new_state.aux));
+#endif
+
+    new_state.dedr = state.dedr;
+    new_state.dedT = state.dedT;
+#ifdef EXTRA_THERMO
+    new_state.dedA = state.dedA;
+    new_state.dedZ = state.dedZ;
+#endif
+
+    new_state.i = state.i;
+    new_state.j = state.j;
+    new_state.k = state.k;
+#ifdef NONAKA_PLOT
+    new_state.level = state.level;
+    new_state.reference_time = state.reference_time;
+#ifdef STRANG
+    new_state.strang_half = state.strang_half;
+#endif
+#endif
+
+#ifdef SIMPLIFIED_SDC
+
+    std::copy(std::begin(state.y), std::end(state.y), std::begin(new_state.y));
+    new_state.rho_orig = state.rho_orig;
+
+#if defined(SDC_EVOLVE_ENERGY)
+    new_state.rhoe_orig = state.rhoe_orig;
+#endif
+
+    std::copy(std::begin(state.ydot_a), std::end(state.ydot_a), std::begin(new_state.ydot_a));
+
+#if defined(SDC_EVOLVE_ENTHALPY)
+    new_state.p0 = state.p0;
+#endif
+
+    new_state.sdc_iter = state.sdc_iter;
+    new_state.num_sdc_iters = state.num_sdc_iters;
+
+#endif
+
+    new_state.T_fixed = state.T_fixed;
+    new_state.cv = state.cv;
+    new_state.dx = state.dx;
+
+#ifdef TRUE_SDC
+    new_state.E_var = state.E_var;
+    std::copy(std::begin(state.mom), std::end(state.mom), std::begin(new_state.mom));
+    std::copy(std::begin(state.f_source), std::end(state.f_source), std::begin(new_state.f_source));
+#endif
+
+    new_state.mu = state.mu;
+    new_state.mu_e = state.mu_e;
+    new_state.y_e = state.y_e;
+    new_state.eta = state.eta;
+    new_state.abar = static_cast<dest_t>(state.abar);
+    new_state.zbar = static_cast<dest_t>(state.zbar);
+
+#ifdef NSE_NET
+    new_state.mu_p = state.mu_p;
+    new_state.mu_n = state.mu_n;
+#endif
+
+    new_state.n_rhs = state.n_rhs;
+    new_state.n_jac = state.n_jac;
+    new_state.n_step = state.n_step;
+    new_state.success = state.success;
+}
+
+
 // Given an eos type, copy the data relevant to the burn type.
 
-template <typename T>
+template <typename T, typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void eos_to_burn (const T& eos_state, burn_t& burn_state)
+void eos_to_burn (const T& eos_state, burn_t<dual_t>& burn_state)
 {
     burn_state.rho  = eos_state.rho;
     burn_state.T    = eos_state.T;
@@ -283,9 +369,9 @@ void eos_to_burn (const T& eos_state, burn_t& burn_state)
 // contribution from the advection term. However this is useful
 // for instantaneous RHS evaluations.
 
-template <typename T>
+template <typename T, typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void burn_to_eos (const burn_t& burn_state, T& eos_state)
+void burn_to_eos (const burn_t<dual_t>& burn_state, T& eos_state)
 {
     eos_state.rho  = burn_state.rho;
     eos_state.T    = burn_state.T;
@@ -314,9 +400,9 @@ void burn_to_eos (const burn_t& burn_state, T& eos_state)
 
 
 #ifdef SIMPLIFIED_SDC
-template <typename T>
+template <typename T, typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void sdc_burn_to_eos (const burn_t& state, T& eos_state)
+void sdc_burn_to_eos (const burn_t<dual_t>& state, T& eos_state)
 {
 #if defined(SDC_EVOLVE_ENERGY)
     eos_state.rho = state.y[SRHO];
@@ -348,8 +434,9 @@ void sdc_burn_to_eos (const burn_t& state, T& eos_state)
     // will do that for us
 }
 
+template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void normalize_abundances_sdc_burn(burn_t& state)
+void normalize_abundances_sdc_burn(burn_t<dual_t>& state)
 {
 
     // Constrain the partial densities in burn_t state to sum to the 
@@ -395,13 +482,14 @@ void normalize_abundances_sdc_burn(burn_t& state)
 }
 #endif
 
+template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void normalize_abundances_burn (burn_t& state)
+void normalize_abundances_burn (burn_t<dual_t>& state)
 {
 
     Real sum = 0.0_rt;
     for (int n = 0; n < NumSpec; ++n) {
-        state.xn[n] = amrex::max(small_x, amrex::min(1.0_rt, state.xn[n]));
+        state.xn[n] = admath::max(small_x, admath::min(1.0_rt, state.xn[n]));
         sum += state.xn[n];
     }
     for (int n = 0; n < NumSpec; ++n) {

@@ -21,7 +21,7 @@
 #endif
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-int dvode (burn_t& state, dvode_t& vstate)
+int dvode (burn_t<Real>& state, dvode_t& vstate)
 {
 
     // Local variables

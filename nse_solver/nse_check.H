@@ -981,7 +981,7 @@ void nse_grouping(amrex::Array1D<int, 1, NumSpec>& group_ind, const T& state,
 
 
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-bool in_nse(burn_t& state){
+bool in_nse(burn_t<Real>& state){
 
   // This function returns the boolean that tells whether we're in nse or not
   // Note that it only works with pynucastro network for now.

@@ -8,7 +8,7 @@
 #endif
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void integrator (burn_t& state, Real dt)
+void integrator (burn_t<Real>& state, Real dt)
 {
     actual_integrator(state, dt);
 

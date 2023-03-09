@@ -8,7 +8,7 @@
 // to d(spec) / de.
 
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-Real temperature_to_energy_jacobian (const burn_t& state, const Real& jac_T)
+Real temperature_to_energy_jacobian (const burn_t<Real>& state, const Real& jac_T)
 {
     Real jac_e = 0.0_rt;
 

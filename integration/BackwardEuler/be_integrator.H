@@ -16,7 +16,7 @@
 #endif
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-Real initial_dt (burn_t& state, be_t& be,
+Real initial_dt (burn_t<Real>& state, be_t& be,
                  Array1D<Real, 1, BE_NEQS>& ydot)
 {
     // this is a version of the initial timestep estimator from VODE
@@ -110,7 +110,7 @@ Real initial_dt (burn_t& state, be_t& be,
 /// we return an error code
 ///
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-int single_step (burn_t& state, be_t& be, const Real dt)
+int single_step (burn_t<Real>& state, be_t& be, const Real dt)
 {
 
     int ierr = BE_SUCCESS;
@@ -244,7 +244,7 @@ int single_step (burn_t& state, be_t& be, const Real dt)
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-int be_integrator (burn_t& state, be_t& be)
+int be_integrator (burn_t<Real>& state, be_t& be)
 {
 
     be.n_rhs = 0;

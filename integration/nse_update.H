@@ -30,7 +30,7 @@ using namespace amrex;
 /// update the state due to NSE changes for the simplified-SDC case
 ///
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-void sdc_nse_burn(burn_t& state, const Real dt) {
+void sdc_nse_burn(burn_t<Real>& state, const Real dt) {
 
     using namespace AuxZero;
 
@@ -187,7 +187,7 @@ void sdc_nse_burn(burn_t& state, const Real dt) {
 /// update the state due to NSE changes for the Strang-split case
 ///
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-void nse_burn(burn_t& state, const Real dt) {
+void nse_burn(burn_t<Real>& state, const Real dt) {
 
 #if defined(NSE_TABLE)
 

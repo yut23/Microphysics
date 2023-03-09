@@ -12,7 +12,7 @@
 #include <extern_parameters.H>
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-Real calculate_dt (burn_t& state, Array1D<Real, 1, NumSpec>& spec_rhs, Real& ener_rhs)
+Real calculate_dt (burn_t<Real>& state, Array1D<Real, 1, NumSpec>& spec_rhs, Real& ener_rhs)
 {
     // Our timestepping strategy is to prevent any quantity
     // from changing by more than a certain factor in any
@@ -60,7 +60,7 @@ Real calculate_dt (burn_t& state, Array1D<Real, 1, NumSpec>& spec_rhs, Real& ene
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void clean_state (burn_t& state)
+void clean_state (burn_t<Real>& state)
 {
     // Renormalize the abundances.
 
@@ -79,7 +79,7 @@ void clean_state (burn_t& state)
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void evaluate_rhs (burn_t& state, Array1D<Real, 1, NumSpec>& spec_rhs, Real& ener_rhs)
+void evaluate_rhs (burn_t<Real>& state, Array1D<Real, 1, NumSpec>& spec_rhs, Real& ener_rhs)
 {
     // Evaluate the RHS.
 
@@ -99,7 +99,7 @@ void evaluate_rhs (burn_t& state, Array1D<Real, 1, NumSpec>& spec_rhs, Real& ene
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void initialize_state (burn_t& state)
+void initialize_state (burn_t<Real>& state)
 {
     // We assume that (rho, T) coming in are valid, do an EOS call
     // to fill the rest of the thermodynamic variables.
@@ -112,7 +112,7 @@ void initialize_state (burn_t& state)
 }
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void actual_integrator (burn_t& state, Real dt)
+void actual_integrator (burn_t<Real>& state, Real dt)
 {
     initialize_state(state);
 

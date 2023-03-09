@@ -12,7 +12,7 @@
 
 template <typename T>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void update_density_in_time(const Real time, burn_t& state, [[maybe_unused]] const T& int_state)
+void update_density_in_time(const Real time, burn_t<Real>& state, [[maybe_unused]] const T& int_state)
 {
 
     // some quantities are only advected.  Here we update those state
@@ -49,7 +49,7 @@ void update_density_in_time(const Real time, burn_t& state, [[maybe_unused]] con
 
 template <typename T>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void renormalize_species(const Real time, burn_t& state, T& int_state)
+void renormalize_species(const Real time, burn_t<Real>& state, T& int_state)
 {
 
     // Constrain the partial densities in int_state to sum to the
@@ -86,7 +86,7 @@ void renormalize_species(const Real time, burn_t& state, T& int_state)
 
 template <typename T>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void clean_state(const Real time, burn_t& state, T& int_state)
+void clean_state(const Real time, burn_t<Real>& state, T& int_state)
 {
 
     // Ensure that mass fractions always stay positive.
@@ -113,7 +113,7 @@ void clean_state(const Real time, burn_t& state, T& int_state)
 
 template <typename T>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void burn_to_int(burn_t& state, T& int_state)
+void burn_to_int(burn_t<Real>& state, T& int_state)
 {
 
     for (int n = 0; n < SVAR_EVOLVE; n++) {
@@ -142,7 +142,7 @@ void burn_to_int(burn_t& state, T& int_state)
 
 template <typename T>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void int_to_burn(const Real time, const T& int_state, burn_t& state)
+void int_to_burn(const Real time, const T& int_state, burn_t<Real>& state)
 {
 
     // this makes burn_t represent the current integration state.  The
@@ -239,7 +239,7 @@ void int_to_burn(const Real time, const T& int_state, burn_t& state)
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
 void rhs_to_int([[maybe_unused]] const Real time,
-                burn_t& state,
+                burn_t<Real>& state,
                 RArray1D& ydot)
 {
 

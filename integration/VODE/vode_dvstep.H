@@ -43,7 +43,7 @@ void retract_nordsieck (dvode_t& vstate)
 
 
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-int dvstep (burn_t& state, dvode_t& vstate)
+int dvstep (burn_t<Real>& state, dvode_t& vstate)
 {
 
     // dvstep performs one step of the integration of an initial value

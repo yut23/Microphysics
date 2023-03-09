@@ -191,7 +191,7 @@ void main_main ()
     AsyncArray<int> aa_num_failed(&num_failed, 1);
     int* num_failed_d = aa_num_failed.data();
 
-    ValLocPair<int, burn_t> r;
+    ValLocPair<int, burn_t<Real>> r;
 
     {
         BL_PROFILE("do_react");
@@ -200,8 +200,8 @@ void main_main ()
         auto const& ma = state.arrays();
         auto const& ia = integrator_n_rhs.arrays();
 
-        r = amrex::ParReduce(TypeList<ReduceOpMax>{}, TypeList<ValLocPair<int, burn_t>>{}, state,
-        [=] AMREX_GPU_DEVICE (int box_no, int i, int j, int k) -> GpuTuple<ValLocPair<int, burn_t>>
+        r = amrex::ParReduce(TypeList<ReduceOpMax>{}, TypeList<ValLocPair<int, burn_t<Real>>>{}, state,
+        [=] AMREX_GPU_DEVICE (int box_no, int i, int j, int k) -> GpuTuple<ValLocPair<int, burn_t<Real>>>
         {
 
             Array4<Real> const& s = ma[box_no];
@@ -214,7 +214,7 @@ void main_main ()
                 Gpu::Atomic::Add(num_failed_d, 1);
             }
 
-            return {ValLocPair<int, burn_t>{n_rhs(i,j,k,0), burn_state}};
+            return {ValLocPair<int, burn_t<Real>>{n_rhs(i,j,k,0), burn_state}};
         });
 
     }
