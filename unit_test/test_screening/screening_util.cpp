@@ -311,6 +311,7 @@ void screen_test_C(const Box& bx,
     screen_factors[vars.iscn_n14_he4] = scn_fac;
   }
 
+  using dual_t = autodiff::dual;
   amrex::ParallelFor(bx,
   [=] AMREX_GPU_DEVICE (int i, int j, int k)
   {
@@ -321,7 +322,7 @@ void screen_test_C(const Box& bx,
     Real xn[NumSpec];
 
     // for now... the screening using 1-based indexing
-    Array1D<Real, 1, NumSpec> ymass;
+    Array1D<dual_t, 1, NumSpec> ymass;
 
     for (int n = 0; n < NumSpec; n++) {
       xn[n] = metalicity / static_cast<Real>(NumSpec - 2);
@@ -333,9 +334,9 @@ void screen_test_C(const Box& bx,
       ymass(n+1) = xn[n] / aion[n];
     }
 
-    autodiff::number_t temp_zone = std::pow(10.0, std::log10(temp_min) + static_cast<Real>(j)*dlogT);
+    dual_t temp_zone = std::pow(10.0, std::log10(temp_min) + static_cast<Real>(j)*dlogT);
     // seed the dual number for temperature before calculating anything with it
-    autodiff::detail::seed<1>(temp_zone, 1.0);
+    autodiff::seed<1>(temp_zone, 1.0);
 
     Real dens_zone = std::pow(10.0, std::log10(dens_min) + static_cast<Real>(i)*dlogrho);
 
@@ -346,17 +347,16 @@ void screen_test_C(const Box& bx,
       sp(i, j, k, vars.ispec+n) = xn[n];
     }
 
-    plasma_state_t pstate;
+    plasma_state_t<dual_t> pstate;
     fill_plasma_state(pstate, temp_zone, dens_zone, ymass);
 
-    Real sc1a;
-    Real sc1adt;
+    dual_t sc1a;
 
     for (auto &[var, scn_fac] : screen_factors)
     {
-      actual_screen(pstate, scn_fac, sc1a, sc1adt);
-      sp(i, j, k, var.value) = std::log(sc1a);
-      sp(i, j, k, var.dt) = sc1adt / sc1a;
+      actual_screen(pstate, scn_fac, sc1a);
+      sp(i, j, k, var.value) = std::log(static_cast<Real>(sc1a));
+      sp(i, j, k, var.dt) = autodiff::derivative<1>(sc1a) / static_cast<Real>(sc1a);
     }
 
   });
