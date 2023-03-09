@@ -15,7 +15,6 @@
 #include <extern_parameters.H>
 
 using namespace amrex;
-namespace admath = autodiff::math_functions;
 
 #if SCREEN_METHOD == 0
 const std::string screen_name = "screen5";
@@ -29,24 +28,26 @@ const std::string screen_name = "null";
 const std::string screen_name = "chabrier1998";
 #endif
 
+template <typename dual_t = Real>
 struct plasma_state_t {
-  autodiff::number_t qlam0z;
-  autodiff::number_t taufac;
-  autodiff::number_t aa;
-  autodiff::number_t temp;
-  Real zbar;
-  Real z2bar;
-  Real n_e;
-  Real gamma_e_fac;
+  dual_t qlam0z;
+  dual_t taufac;
+  dual_t aa;
+  dual_t temp;
+  dual_t zbar;
+  dual_t z2bar;
+  dual_t n_e;
+  dual_t gamma_e_fac;
 };
 
+template <typename dual_t>
 inline
-std::ostream& operator<< (std::ostream& o, plasma_state_t const& pstate)
+std::ostream& operator<< (std::ostream& o, plasma_state_t<dual_t> const& pstate)
 {
-  o << "qlam0z   = " << autodiff::repr(pstate.qlam0z) << std::endl;
-  o << "taufac   = " << autodiff::repr(pstate.taufac) << std::endl;
-  o << "aa       = " << autodiff::repr(pstate.aa) << std::endl;
-  o << "temp     = " << autodiff::repr(pstate.temp) << std::endl;
+  o << "qlam0z   = " << pstate.qlam0z << std::endl;
+  o << "taufac   = " << pstate.taufac << std::endl;
+  o << "aa       = " << pstate.aa << std::endl;
+  o << "temp     = " << pstate.temp << std::endl;
   o << "zbar     = " << pstate.zbar << std::endl;
   o << "z2bar    = " << pstate.z2bar << std::endl;
   o << "n_e      = " << pstate.n_e << std::endl;
@@ -99,17 +100,17 @@ void add_screening_factor(const int i,
 template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
 void
-fill_plasma_state(plasma_state_t& state, const dual_t temp, const Real dens, Array1D<Real, 1, NumSpec> const& y) {
+fill_plasma_state(plasma_state_t<dual_t>& state, const dual_t temp, const Real dens, Array1D<dual_t, 1, NumSpec> const& y) {
 
-  Real sum = 0.0_rt;
+  dual_t sum = 0.0_rt;
   for (int n = 1; n <= NumSpec; n++) {
     sum += y(n);
   }
-  Real abar = 1.0_rt / sum;
-  Real ytot = sum;
+  dual_t abar = 1.0_rt / sum;
+  dual_t ytot = sum;
 
   sum = 0.0_rt;
-  Real sum2 = 0.0_rt;
+  dual_t sum2 = 0.0_rt;
   for (int n = 1; n <= NumSpec; n++) {
     sum += zion[n-1]*y(n);
     sum2 += zion[n-1]*zion[n-1]*y(n);
@@ -120,11 +121,11 @@ fill_plasma_state(plasma_state_t& state, const dual_t temp, const Real dens, Arr
   // the extra (1/3) to make tau -> tau/3
   const Real co2 = (1.0_rt/3.0_rt) * 4.248719e3_rt;
 
-  Real zbar = sum * abar;
-  Real z2bar = sum2 * abar;
+  dual_t zbar = sum * abar;
+  dual_t z2bar = sum2 * abar;
 
   // ntot
-  Real rr = dens * ytot;
+  dual_t rr = dens * ytot;
   dual_t tempi = 1.0_rt / temp;
 
   // Part of Eq. 19 in Graboske:1973
@@ -137,7 +138,7 @@ fill_plasma_state(plasma_state_t& state, const dual_t temp, const Real dens, Arr
   // Part of Eq.6 in Itoh:1979
   state.taufac = co2 * admath::cbrt(tempi);
 
-  Real xni = admath::cbrt(rr * zbar);
+  dual_t xni = admath::cbrt(rr * zbar);
 
   // Part of Eq.4 in Itoh:1979
   // 2.27493e5 = e^2 / ( (3*m_u/(4pi))^(1/3) *k_B )
@@ -149,28 +150,20 @@ fill_plasma_state(plasma_state_t& state, const dual_t temp, const Real dens, Arr
 
   // Electron number density
   // zbar * ntot works out to sum(z[i] * n[i]), after cancelling terms
-  state.n_e = zbar * rr * C::n_A;
+  // Temporary Real is needed for CUDA compatibility with autodiff. nvcc doesn't
+  // allow static constexpr variables to be accessed by reference, which the
+  // autodiff code does internally.
+  state.n_e = zbar * rr * Real(C::n_A);
 
   // precomputed part of Gamma_e, from Chugunov 2009 eq. 6
   constexpr Real gamma_e_constants =
       C::q_e*C::q_e/C::k_B * gcem::pow(4.0_rt/3.0_rt*M_PI, 1.0_rt/3.0_rt);
-  state.gamma_e_fac = gamma_e_constants * std::cbrt(state.n_e);
-}
-
-AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void
-fill_plasma_state(plasma_state_t& state, const autodiff::number_t temp, const Real dens, Array1D<Real, 1, NumSpec> const& y) {
-    // temp will be automatically upcast from a Real if necessary
-    if (jacobian == 1) {
-        fill_plasma_state<autodiff::number_t>(state, temp, dens, y);
-    } else {
-        fill_plasma_state<amrex::Real>(state, autodiff::val(temp), dens, y);
-    }
+  state.gamma_e_fac = gamma_e_constants * admath::cbrt(state.n_e);
 }
 
 template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-dual_t actual_screen5 (const plasma_state_t& state,
+dual_t actual_screen5 (const plasma_state_t<dual_t>& state,
                        const scrn::screen_factors_t& scn_fac)
 {
     // this subroutine calculates screening factors and their derivatives
@@ -197,7 +190,7 @@ dual_t actual_screen5 (const plasma_state_t& state,
 
     // calculate individual screening factors
     Real bb = z1 * z2;
-    dual_t gamp = static_cast<dual_t>(state.aa);
+    dual_t gamp = state.aa;
 
     // In Eq.4 in Itoh:1979, this term is 2*Z_1*Z_2/(Z_1^(1/3) + Z_2^(1/3))
     // However here we follow Wallace:1982 Eq. A13, which is Z_1*Z_2*(2/(Z_1+Z_2))^(1/3)
@@ -212,7 +205,7 @@ dual_t actual_screen5 (const plasma_state_t& state,
     // the extra 1/3 factor is there for convenience.
     // tau12 = Eq.6 / 3
     
-    dual_t tau12 = static_cast<dual_t>(state.taufac) * scn_fac.aznut;
+    dual_t tau12 = state.taufac * scn_fac.aznut;
 
     // alph12 = 3*gamma_ij/tau_ij
     
@@ -238,7 +231,7 @@ dual_t actual_screen5 (const plasma_state_t& state,
     // Full version of Eq. 19 in Graboske:1973 by considering weak regime
     // and Wallace:1982 Eq. A14. Here the degeneracy factor is assumed to be 1.
     
-    dual_t h12w = bb * static_cast<dual_t>(state.qlam0z);
+    dual_t h12w = bb * state.qlam0z;
 
     dual_t h12 = h12w;
 
@@ -327,7 +320,7 @@ dual_t actual_screen5 (const plasma_state_t& state,
 
 template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-dual_t chugunov2007 (const plasma_state_t& state,
+dual_t chugunov2007 (const plasma_state_t<dual_t>& state,
                      const scrn::screen_factors_t& scn_fac)
 {
     // Calculates screening factors based on Chugunov et al. 2007, following the
@@ -363,15 +356,15 @@ dual_t chugunov2007 (const plasma_state_t& state,
     //   m_i -> m_u * abar
     Real mu12 = scn_fac.a1 * scn_fac.a2 / (scn_fac.a1 + scn_fac.a2);
     Real z_factor = scn_fac.z1 * scn_fac.z2;
-    Real n_i = state.n_e / gcem::pow(scn_fac.ztilde, 3);
+    dual_t n_i = state.n_e / gcem::pow(scn_fac.ztilde, 3);
     Real m_i = 2.0_rt * mu12 / C::n_A;
 
     constexpr Real T_p_factor = C::hbar/C::k_B*C::q_e*gcem::sqrt(4.0_rt*GCEM_PI);
-    Real T_p = T_p_factor * std::sqrt(z_factor * n_i / m_i);
+    dual_t T_p = T_p_factor * admath::sqrt(z_factor * n_i / m_i);
 
     // Normalized temperature
-    Real inv_T_p = 1.0_rt / T_p;
-    dual_t T_norm = static_cast<dual_t>(state.temp) * inv_T_p;
+    dual_t inv_T_p = 1.0_rt / T_p;
+    dual_t T_norm = state.temp * inv_T_p;
 
     // The fit has only been verified down to T ~ 0.1 T_p, below which the rate
     // should be nearly temperature-independent (in the pycnonuclear regime),
@@ -486,7 +479,7 @@ dual_t f0 (const dual_t& gamma)
 
 template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-dual_t chugunov2009 (const plasma_state_t& state,
+dual_t chugunov2009 (const plasma_state_t<dual_t>& state,
                      const scrn::screen_factors_t& scn_fac)
 {
     // Calculates screening factors based on Chugunov and DeWitt 2009, PhRvC, 80, 014611
@@ -499,7 +492,7 @@ dual_t chugunov2009 (const plasma_state_t& state,
     Real zcomp = scn_fac.z1 + scn_fac.z2;
 
     // Gamma_e from eq. 6
-    dual_t Gamma_e = state.gamma_e_fac / static_cast<dual_t>(state.temp);
+    dual_t Gamma_e = state.gamma_e_fac / state.temp;
 
     // Coulomb coupling parameters for ions and compound nucleus, eqs. 7 & 9
     dual_t Gamma_1 = Gamma_e * std::pow(scn_fac.z1, 5.0_rt/3.0_rt);
@@ -512,7 +505,7 @@ dual_t chugunov2009 (const plasma_state_t& state,
     constexpr Real tau_factor = gcem::pow(
             27.0_rt/2.0_rt * gcem::pow(M_PI*C::q_e*C::q_e/C::hbar, 2) / (C::n_A*C::k_B),
             1.0_rt/3.0_rt);
-    dual_t tau_12 = tau_factor * scn_fac.aznut / admath::cbrt(static_cast<dual_t>(state.temp));
+    dual_t tau_12 = tau_factor * scn_fac.aznut / admath::cbrt(state.temp);
 
     // eq. 12
     dual_t zeta = 3.0_rt * Gamma_12 / tau_12;
@@ -535,7 +528,7 @@ dual_t chugunov2009 (const plasma_state_t& state,
     dual_t h_fit = term1 + term2 - term3;
 
     // weak screening correction term, eq. A3
-    Real corr_C = 3.0_rt*z1z2 * std::sqrt(state.z2bar/state.zbar) /
+    dual_t corr_C = 3.0_rt*z1z2 * admath::sqrt(state.z2bar/state.zbar) /
                   (std::pow(zcomp, 2.5_rt) - std::pow(scn_fac.z1, 2.5_rt) - std::pow(scn_fac.z2, 2.5_rt));
 
     // corrected enhancement factor, eq. A4
@@ -553,7 +546,7 @@ dual_t chugunov2009 (const plasma_state_t& state,
 
 template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_INLINE
-dual_t chabrier1998 (const plasma_state_t& state,
+dual_t chabrier1998 (const plasma_state_t<dual_t>& state,
                      const scrn::screen_factors_t& scn_fac)
 {
   // Calculates screening factors based on Chabrier & Potekhin 1998,
@@ -569,7 +562,7 @@ dual_t chabrier1998 (const plasma_state_t& state,
 
   // Eq. 2 in Chabrier & Potekhin 1998
   
-  dual_t Gamma_e = state.gamma_e_fac / static_cast<dual_t>(state.temp);
+  dual_t Gamma_e = state.gamma_e_fac / state.temp;
   Real zcomp = scn_fac.z1 + scn_fac.z2;
 
   // See Calder2007 appendix Eq. A9
@@ -605,11 +598,10 @@ dual_t chabrier1998 (const plasma_state_t& state,
   // See Wallace1982, Eq. A13
   
   dual_t Gamma_eff = std::cbrt(2.0_rt) * scn_fac.z1 * scn_fac.z2 * scn_fac.zs13inv * Gamma_e;
-  [[maybe_unused]] Real Gamma_eff_dT;
 
   // TAU/3, see Wallace1982, Eq. A2
   
-  dual_t tau12 = static_cast<dual_t>(state.taufac) * scn_fac.aznut;
+  dual_t tau12 = state.taufac * scn_fac.aznut;
 
   // see Calder 2007 Eq. A8
   
@@ -642,12 +634,10 @@ dual_t chabrier1998 (const plasma_state_t& state,
 
 template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-dual_t actual_screen(const plasma_state_t& state,
-                     const scrn::screen_factors_t& scn_fac)
+void actual_screen(const plasma_state_t<dual_t>& state,
+                   const scrn::screen_factors_t& scn_fac,
+                   dual_t& scor)
 {
-    dual_t scor;
-#ifdef AMREX_DEBUG
-#endif
 #if SCREEN_METHOD == 0
     scor = actual_screen5<dual_t>(state, scn_fac);
 #elif SCREEN_METHOD == 1
@@ -656,42 +646,20 @@ dual_t actual_screen(const plasma_state_t& state,
     scor = chugunov2009<dual_t>(state, scn_fac);
 #elif SCREEN_METHOD == 3
     // null screening
+    amrex::ignore_unused(state, scn_fac);
     scor = 1.0_rt;
 #elif SCREEN_METHOD == 4
     scor = chabrier1998<dual_t>(state, scn_fac);
 #endif
-    return scor;
 }
 
+template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-autodiff::number_t actual_screen(const plasma_state_t& state,
-                                 const scrn::screen_factors_t& scn_fac)
-{
-    autodiff::number_t scor;
-    if (jacobian == 1) {
-        scor = actual_screen<autodiff::number_t>(state, scn_fac);
-    } else {
-        scor = actual_screen<amrex::Real>(state, scn_fac);
-    }
-    return scor;
-}
-
-AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void actual_screen(const plasma_state_t& state,
-                   const scrn::screen_factors_t& scn_fac,
-                   Real& scor, Real& scordt)
-{
-    autodiff::number_t scor_dual = actual_screen(state, scn_fac);
-    scor = static_cast<Real>(scor_dual);
-    scordt = autodiff::derivative<1>(scor_dual);
-}
-
-AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void screen(const plasma_state_t& state,
+void screen(const plasma_state_t<dual_t>& state,
             const int jscreen,
             MICROPHYSICS_UNUSED const Real z1_screen, MICROPHYSICS_UNUSED const Real a1_screen,
             MICROPHYSICS_UNUSED const Real z2_screen, MICROPHYSICS_UNUSED const Real a2_screen,
-            Real& scor, Real& scordt, Real& /*scordd*/)
+            dual_t& scor)
 {
     using namespace scrn;
 
@@ -699,34 +667,18 @@ void screen(const plasma_state_t& state,
     AMREX_ASSERT(scn_facs[jscreen].validate_nuclei(z1_screen, a1_screen, z2_screen, a2_screen));
 #endif
 
-    actual_screen(state, scn_facs[jscreen], scor, scordt);
+    actual_screen(state, scn_facs[jscreen], scor);
 }
 
+template <typename dual_t>
 AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
-void screen(const plasma_state_t& state,
+void screen(const plasma_state_t<dual_t>& state,
             const scrn::screen_factors_t& scn_fac,
-            Real& scor, Real& scordt, Real& /*scordd*/)
+            dual_t& scor)
 {
     using namespace scrn;
 
-    actual_screen(state, scn_fac, scor, scordt);
+    actual_screen(state, scn_fac, scor);
 }
-
-#ifdef AMREX_DEBUG
-namespace {
-// good for catching bugs with clang-tidy and ccls
-[[maybe_unused]] static void __lint_helper(const plasma_state_t& state, const scrn::screen_factors_t& scn_fac)
-{
-  actual_screen5<autodiff::number_t>(state, scn_fac);
-  chugunov2007<autodiff::number_t>(state, scn_fac);
-  chugunov2009<autodiff::number_t>(state, scn_fac);
-  chabrier1998<autodiff::number_t>(state, scn_fac);
-  actual_screen5<amrex::Real>(state, scn_fac);
-  chugunov2007<amrex::Real>(state, scn_fac);
-  chugunov2009<amrex::Real>(state, scn_fac);
-  chabrier1998<amrex::Real>(state, scn_fac);
-}
-}
-#endif
 
 #endif
