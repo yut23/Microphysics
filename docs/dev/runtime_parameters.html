@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BackwardEuler &mdash; Microphysics  documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/theme_overrides.css?v=2e394b92" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -76,6 +78,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#multigamma">multigamma</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#networks">networks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nse-solver">nse_solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nse-table-cell">nse_table_cell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nse-tabular">nse_tabular</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#polytrope">polytrope</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#powerlaw">powerlaw</a></li>
@@ -83,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#rad-power-law">rad_power_law</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rprox">rprox</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#subch-approx">subch_approx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subch-base">subch_base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#subch-full">subch_full</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#subch-simple">subch_simple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-aprox-rates">test_aprox_rates</a></li>
@@ -90,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#test-conductivity">test_conductivity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-eos">test_eos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-jac">test_jac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-neutrino-cooling">test_neutrino_cooling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-nse">test_nse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-nse-interp">test_nse_interp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-part-func">test_part_func</a></li>
@@ -142,7 +147,7 @@
            <div itemprop="articleBody">
              
   <section id="backwardeuler">
-<h1>BackwardEuler<a class="headerlink" href="#backwardeuler" title="Permalink to this heading"></a></h1>
+<h1>BackwardEuler<a class="headerlink" href="#backwardeuler" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -167,7 +172,7 @@
 </table>
 </section>
 <section id="forwardeuler">
-<h1>ForwardEuler<a class="headerlink" href="#forwardeuler" title="Permalink to this heading"></a></h1>
+<h1>ForwardEuler<a class="headerlink" href="#forwardeuler" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -184,7 +189,7 @@
 </table>
 </section>
 <section id="qss">
-<h1>QSS<a class="headerlink" href="#qss" title="Permalink to this heading"></a></h1>
+<h1>QSS<a class="headerlink" href="#qss" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -233,7 +238,7 @@ reject it</p></td>
 </table>
 </section>
 <section id="rkc">
-<h1>RKC<a class="headerlink" href="#rkc" title="Permalink to this heading"></a></h1>
+<h1>RKC<a class="headerlink" href="#rkc" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -258,7 +263,7 @@ spectral radius? note: requires integrator.scale_system
 </table>
 </section>
 <section id="vode">
-<h1>VODE<a class="headerlink" href="#vode" title="Permalink to this heading"></a></h1>
+<h1>VODE<a class="headerlink" href="#vode" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -276,7 +281,7 @@ consider species that are &gt; X_reject_buffer * atol_spec</p></td>
 </table>
 </section>
 <section id="ase">
-<h1>ase<a class="headerlink" href="#ase" title="Permalink to this heading"></a></h1>
+<h1>ase<a class="headerlink" href="#ase" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -285,11 +290,11 @@ consider species that are &gt; X_reject_buffer * atol_spec</p></td>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_c12_to_n13</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_C12_to_N13</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_he4_n13_to_p_o16</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_He4_N13_to_p_O16</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
@@ -297,7 +302,7 @@ consider species that are &gt; X_reject_buffer * atol_spec</p></td>
 </table>
 </section>
 <section id="breakout">
-<h1>breakout<a class="headerlink" href="#breakout" title="Permalink to this heading"></a></h1>
+<h1>breakout<a class="headerlink" href="#breakout" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -314,7 +319,7 @@ consider species that are &gt; X_reject_buffer * atol_spec</p></td>
 </table>
 </section>
 <section id="burn-cell">
-<h1>burn_cell<a class="headerlink" href="#burn-cell" title="Permalink to this heading"></a></h1>
+<h1>burn_cell<a class="headerlink" href="#burn-cell" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -364,10 +369,10 @@ logarithmically spaced steps between [tfirst, tmax]</p></td>
 </table>
 </section>
 <section id="burn-cell-primordial-chem">
-<h1>burn_cell_primordial_chem<a class="headerlink" href="#burn-cell-primordial-chem" title="Permalink to this heading"></a></h1>
+<h1>burn_cell_primordial_chem<a class="headerlink" href="#burn-cell-primordial-chem" title="Link to this heading"></a></h1>
 </section>
 <section id="burn-cell-sdc">
-<h1>burn_cell_sdc<a class="headerlink" href="#burn-cell-sdc" title="Permalink to this heading"></a></h1>
+<h1>burn_cell_sdc<a class="headerlink" href="#burn-cell-sdc" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -586,11 +591,19 @@ as given in the inputs?</p></td>
 <td></td>
 <td><p>0.0e0</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mu_p</span></code></p></td>
+<td></td>
+<td><p>-5.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mu_n</span></code></p></td>
+<td></td>
+<td><p>-12.0</p></td>
+</tr>
 </tbody>
 </table>
 </section>
 <section id="cj-detonation">
-<h1>cj_detonation<a class="headerlink" href="#cj-detonation" title="Permalink to this heading"></a></h1>
+<h1>cj_detonation<a class="headerlink" href="#cj-detonation" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -615,7 +628,7 @@ as given in the inputs?</p></td>
 </table>
 </section>
 <section id="constant">
-<h1>constant<a class="headerlink" href="#constant" title="Permalink to this heading"></a></h1>
+<h1>constant<a class="headerlink" href="#constant" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -632,7 +645,7 @@ as given in the inputs?</p></td>
 </table>
 </section>
 <section id="constant-opacity">
-<h1>constant_opacity<a class="headerlink" href="#constant-opacity" title="Permalink to this heading"></a></h1>
+<h1>constant_opacity<a class="headerlink" href="#constant-opacity" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -649,7 +662,7 @@ as given in the inputs?</p></td>
 </table>
 </section>
 <section id="eos-cell">
-<h1>eos_cell<a class="headerlink" href="#eos-cell" title="Permalink to this heading"></a></h1>
+<h1>eos_cell<a class="headerlink" href="#eos-cell" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -678,7 +691,7 @@ as given in the inputs?</p></td>
 </table>
 </section>
 <section id="gamma-law">
-<h1>gamma_law<a class="headerlink" href="#gamma-law" title="Permalink to this heading"></a></h1>
+<h1>gamma_law<a class="headerlink" href="#gamma-law" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -693,13 +706,13 @@ as given in the inputs?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">eos_assume_neutral</span></code></p></td>
 <td></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="helmholtz">
-<h1>helmholtz<a class="headerlink" href="#helmholtz" title="Permalink to this heading"></a></h1>
+<h1>helmholtz<a class="headerlink" href="#helmholtz" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -710,11 +723,11 @@ as given in the inputs?</p></td>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_eos_coulomb</span></code></p></td>
 <td><p>use the Coulomb corrections</p></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">eos_input_is_constant</span></code></p></td>
 <td><p>Force the EOS output quantities to match input</p></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">eos_ttol</span></code></p></td>
 <td><p>Tolerance for iterations with respect to temperature</p></td>
@@ -738,7 +751,7 @@ as given in the inputs?</p></td>
 </table>
 </section>
 <section id="integration">
-<h1>integration<a class="headerlink" href="#integration" title="Permalink to this heading"></a></h1>
+<h1>integration<a class="headerlink" href="#integration" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -754,12 +767,12 @@ done with an EOS call, which can be turned off if
 desired. This will freeze the temperature and specific
 heat to the values at the beginning of the burn, which
 is inaccurate but cheaper.</p></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">integrate_energy</span></code></p></td>
 <td><p>Allow the energy integration to be disabled by setting
 the RHS to zero.</p></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">jacobian</span></code></p></td>
 <td><p>Whether to use an analytical or numerical Jacobian. 1
@@ -770,7 +783,7 @@ reactions; analytic for primitive -&gt; conserved
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">burner_verbose</span></code></p></td>
 <td><p>Should we print out diagnostic output after the solve?</p></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rtol_spec</span></code></p></td>
 <td><p>Tolerances for the solver (relative and absolute), for
@@ -792,7 +805,7 @@ the species and energy equations.</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">renormalize_abundances</span></code></p></td>
 <td><p>Whether to renormalize the mass fractions at each step
 in the evolution so that they sum to unity.</p></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SMALL_X_SAFE</span></code></p></td>
 <td><p>The absolute cutoff for species – note that this might
@@ -822,7 +835,7 @@ integration.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_jacobian_caching</span></code></p></td>
 <td><p>Whether to use Jacobian caching in VODE</p></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nonaka_i</span></code></p></td>
 <td><p>Inputs for generating a Nonaka Plot (TM)</p></td>
@@ -852,11 +865,11 @@ that they are in [0, 1]?</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_number_densities</span></code></p></td>
 <td><p>flag for turning on the use of number densities for all
 species</p></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">subtract_internal_energy</span></code></p></td>
 <td><p>flag for tuning on the subtraction of internal energy</p></td>
-<td><p>.true.</p></td>
+<td><p>1</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sdc_burn_tol_factor</span></code></p></td>
 <td><p>SDC iteration tolerance adjustment factor</p></td>
@@ -868,11 +881,16 @@ O(1)? for Strang, this simply means scaling e by the
 initial energy?</p></td>
 <td><p>0</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nse_iters</span></code></p></td>
+<td><p>for the NSE update predictor-corrector, how many
+iterations do we take to get the new time NSE state</p></td>
+<td><p>3</p></td>
+</tr>
 </tbody>
 </table>
 </section>
 <section id="make-table">
-<h1>make_table<a class="headerlink" href="#make-table" title="Permalink to this heading"></a></h1>
+<h1>make_table<a class="headerlink" href="#make-table" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -881,6 +899,14 @@ initial energy?</p></td>
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">small_dens</span></code></p></td>
+<td></td>
+<td><p>1.e5</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">small_temp</span></code></p></td>
+<td></td>
+<td><p>1.e5</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rho_min</span></code></p></td>
 <td></td>
 <td><p>1.e6</p></td>
@@ -895,7 +921,7 @@ initial energy?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">T_min</span></code></p></td>
 <td></td>
-<td><p>1.e9</p></td>
+<td><p>4.0e9</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">T_max</span></code></p></td>
 <td></td>
@@ -903,7 +929,7 @@ initial energy?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nT</span></code></p></td>
 <td></td>
-<td><p>5</p></td>
+<td><p>10</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Ye_min</span></code></p></td>
 <td></td>
@@ -916,14 +942,6 @@ initial energy?</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nye</span></code></p></td>
 <td></td>
 <td><p>7</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">small_dens</span></code></p></td>
-<td></td>
-<td><p>1.e5</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">small_temp</span></code></p></td>
-<td></td>
-<td><p>1.e5</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rho_min</span></code></p></td>
 <td></td>
@@ -939,7 +957,7 @@ initial energy?</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">T_min</span></code></p></td>
 <td></td>
-<td><p>4.0e9</p></td>
+<td><p>1.e9</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">T_max</span></code></p></td>
 <td></td>
@@ -947,7 +965,7 @@ initial energy?</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nT</span></code></p></td>
 <td></td>
-<td><p>10</p></td>
+<td><p>5</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Ye_min</span></code></p></td>
 <td></td>
@@ -965,7 +983,7 @@ initial energy?</p></td>
 </table>
 </section>
 <section id="multigamma">
-<h1>multigamma<a class="headerlink" href="#multigamma" title="Permalink to this heading"></a></h1>
+<h1>multigamma<a class="headerlink" href="#multigamma" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1006,7 +1024,7 @@ initial energy?</p></td>
 </table>
 </section>
 <section id="networks">
-<h1>networks<a class="headerlink" href="#networks" title="Permalink to this heading"></a></h1>
+<h1>networks<a class="headerlink" href="#networks" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1022,17 +1040,17 @@ initial energy?</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_tables</span></code></p></td>
 <td><p>Should we use rate tables if they are present in the
 network?</p></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_c12ag_deboer17</span></code></p></td>
 <td><p>Should we use Deboer + 2017 rate for c12(a,g)o16?</p></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="nse-solver">
-<h1>nse_solver<a class="headerlink" href="#nse-solver" title="Permalink to this heading"></a></h1>
+<h1>nse_solver<a class="headerlink" href="#nse-solver" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1055,15 +1073,15 @@ network?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nse_dx_independent</span></code></p></td>
 <td></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nse_molar_independent</span></code></p></td>
 <td></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nse_skip_molar</span></code></p></td>
 <td></td>
-<td><p>.false.</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">T_nse_net</span></code></p></td>
 <td></td>
@@ -1072,8 +1090,41 @@ network?</p></td>
 </tbody>
 </table>
 </section>
+<section id="nse-table-cell">
+<h1>nse_table_cell<a class="headerlink" href="#nse-table-cell" title="Link to this heading"></a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"><p>default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">small_temp</span></code></p></td>
+<td></td>
+<td><p>1.e5</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">small_dens</span></code></p></td>
+<td></td>
+<td><p>1.e5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">density</span></code></p></td>
+<td></td>
+<td><p>1.23e9</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></td>
+<td></td>
+<td><p>5.18e9</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ye</span></code></p></td>
+<td></td>
+<td><p>0.472</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="nse-tabular">
-<h1>nse_tabular<a class="headerlink" href="#nse-tabular" title="Permalink to this heading"></a></h1>
+<h1>nse_tabular<a class="headerlink" href="#nse-tabular" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1114,13 +1165,13 @@ entering NSE. This is only applied after a failed burn.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nse_table_interp_linear</span></code></p></td>
 <td><p>do we do tri-linear or tri-cubic interpolation on the
 table?</p></td>
-<td><p>1</p></td>
+<td><p>0</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="polytrope">
-<h1>polytrope<a class="headerlink" href="#polytrope" title="Permalink to this heading"></a></h1>
+<h1>polytrope<a class="headerlink" href="#polytrope" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1149,7 +1200,7 @@ table?</p></td>
 </table>
 </section>
 <section id="powerlaw">
-<h1>powerlaw<a class="headerlink" href="#powerlaw" title="Permalink to this heading"></a></h1>
+<h1>powerlaw<a class="headerlink" href="#powerlaw" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1158,14 +1209,6 @@ table?</p></td>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cond_coeff</span></code></p></td>
-<td></td>
-<td><p>1.0</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cond_exponent</span></code></p></td>
-<td></td>
-<td><p>1.0</p></td>
-</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rtilde</span></code></p></td>
 <td><p>the coefficient for the reaction rate</p></td>
 <td><p>1.d0</p></td>
@@ -1190,11 +1233,19 @@ table?</p></td>
 <td></td>
 <td><p>1.0d0</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cond_coeff</span></code></p></td>
+<td></td>
+<td><p>1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cond_exponent</span></code></p></td>
+<td></td>
+<td><p>1.0</p></td>
+</tr>
 </tbody>
 </table>
 </section>
 <section id="primordial-chem">
-<h1>primordial_chem<a class="headerlink" href="#primordial-chem" title="Permalink to this heading"></a></h1>
+<h1>primordial_chem<a class="headerlink" href="#primordial-chem" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1388,7 +1439,7 @@ formation)</p></td>
 </table>
 </section>
 <section id="rad-power-law">
-<h1>rad_power_law<a class="headerlink" href="#rad-power-law" title="Permalink to this heading"></a></h1>
+<h1>rad_power_law<a class="headerlink" href="#rad-power-law" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1469,7 +1520,7 @@ formation)</p></td>
 </table>
 </section>
 <section id="rprox">
-<h1>rprox<a class="headerlink" href="#rprox" title="Permalink to this heading"></a></h1>
+<h1>rprox<a class="headerlink" href="#rprox" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1503,7 +1554,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="subch-approx">
-<h1>subch_approx<a class="headerlink" href="#subch-approx" title="Permalink to this heading"></a></h1>
+<h1>subch_approx<a class="headerlink" href="#subch-approx" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1512,11 +1563,32 @@ compatibility</p></td>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_c12__n13</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_C12_to_N13</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_he4_n13__p_o16</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_He4_N13_to_p_O16</span></code></p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subch-base">
+<h1>subch_base<a class="headerlink" href="#subch-base" title="Link to this heading"></a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"><p>default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_C12_to_N13</span></code></p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_He4_N13_to_p_O16</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
@@ -1524,7 +1596,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="subch-full">
-<h1>subch_full<a class="headerlink" href="#subch-full" title="Permalink to this heading"></a></h1>
+<h1>subch_full<a class="headerlink" href="#subch-full" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1533,11 +1605,11 @@ compatibility</p></td>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_c12__n13</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_C12_to_N13</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_he4_n13__p_o16</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_He4_N13_to_p_O16</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
@@ -1545,7 +1617,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="subch-simple">
-<h1>subch_simple<a class="headerlink" href="#subch-simple" title="Permalink to this heading"></a></h1>
+<h1>subch_simple<a class="headerlink" href="#subch-simple" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1554,11 +1626,11 @@ compatibility</p></td>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_c12__n13</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disable_p_C12_to_N13</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_he4_n13__p_o16</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disable_He4_N13_to_p_O16</span></code></p></td>
 <td></td>
 <td><p>0</p></td>
 </tr>
@@ -1566,7 +1638,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-aprox-rates">
-<h1>test_aprox_rates<a class="headerlink" href="#test-aprox-rates" title="Permalink to this heading"></a></h1>
+<h1>test_aprox_rates<a class="headerlink" href="#test-aprox-rates" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1607,7 +1679,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-ase">
-<h1>test_ase<a class="headerlink" href="#test-ase" title="Permalink to this heading"></a></h1>
+<h1>test_ase<a class="headerlink" href="#test-ase" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1736,7 +1808,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-conductivity">
-<h1>test_conductivity<a class="headerlink" href="#test-conductivity" title="Permalink to this heading"></a></h1>
+<h1>test_conductivity<a class="headerlink" href="#test-conductivity" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1777,7 +1849,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-eos">
-<h1>test_eos<a class="headerlink" href="#test-eos" title="Permalink to this heading"></a></h1>
+<h1>test_eos<a class="headerlink" href="#test-eos" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1818,7 +1890,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-jac">
-<h1>test_jac<a class="headerlink" href="#test-jac" title="Permalink to this heading"></a></h1>
+<h1>test_jac<a class="headerlink" href="#test-jac" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1866,8 +1938,49 @@ compatibility</p></td>
 </tbody>
 </table>
 </section>
+<section id="test-neutrino-cooling">
+<h1>test_neutrino_cooling<a class="headerlink" href="#test-neutrino-cooling" title="Link to this heading"></a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"><p>default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dens_min</span></code></p></td>
+<td></td>
+<td><p>1.d6</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dens_max</span></code></p></td>
+<td></td>
+<td><p>1.d9</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">temp_min</span></code></p></td>
+<td></td>
+<td><p>1.d6</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">temp_max</span></code></p></td>
+<td></td>
+<td><p>1.d12</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">metalicity_max</span></code></p></td>
+<td></td>
+<td><p>0.1d0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">small_temp</span></code></p></td>
+<td></td>
+<td><p>1.d4</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">small_dens</span></code></p></td>
+<td></td>
+<td><p>1.d-4</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="test-nse">
-<h1>test_nse<a class="headerlink" href="#test-nse" title="Permalink to this heading"></a></h1>
+<h1>test_nse<a class="headerlink" href="#test-nse" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1912,7 +2025,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-nse-interp">
-<h1>test_nse_interp<a class="headerlink" href="#test-nse-interp" title="Permalink to this heading"></a></h1>
+<h1>test_nse_interp<a class="headerlink" href="#test-nse-interp" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1945,7 +2058,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-part-func">
-<h1>test_part_func<a class="headerlink" href="#test-part-func" title="Permalink to this heading"></a></h1>
+<h1>test_part_func<a class="headerlink" href="#test-part-func" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -1974,7 +2087,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-react">
-<h1>test_react<a class="headerlink" href="#test-react" title="Permalink to this heading"></a></h1>
+<h1>test_react<a class="headerlink" href="#test-react" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2023,7 +2136,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-rhs">
-<h1>test_rhs<a class="headerlink" href="#test-rhs" title="Permalink to this heading"></a></h1>
+<h1>test_rhs<a class="headerlink" href="#test-rhs" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2064,7 +2177,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-screening">
-<h1>test_screening<a class="headerlink" href="#test-screening" title="Permalink to this heading"></a></h1>
+<h1>test_screening<a class="headerlink" href="#test-screening" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2105,7 +2218,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-sdc">
-<h1>test_sdc<a class="headerlink" href="#test-sdc" title="Permalink to this heading"></a></h1>
+<h1>test_sdc<a class="headerlink" href="#test-sdc" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2154,7 +2267,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="test-sdc-vode-rhs">
-<h1>test_sdc_vode_rhs<a class="headerlink" href="#test-sdc-vode-rhs" title="Permalink to this heading"></a></h1>
+<h1>test_sdc_vode_rhs<a class="headerlink" href="#test-sdc-vode-rhs" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2339,7 +2452,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="tillotson">
-<h1>tillotson<a class="headerlink" href="#tillotson" title="Permalink to this heading"></a></h1>
+<h1>tillotson<a class="headerlink" href="#tillotson" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2396,7 +2509,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="triple-alpha-plus-cago">
-<h1>triple_alpha_plus_cago<a class="headerlink" href="#triple-alpha-plus-cago" title="Permalink to this heading"></a></h1>
+<h1>triple_alpha_plus_cago<a class="headerlink" href="#triple-alpha-plus-cago" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -2430,7 +2543,7 @@ compatibility</p></td>
 </table>
 </section>
 <section id="unit-test">
-<h1>unit_test<a class="headerlink" href="#unit-test" title="Permalink to this heading"></a></h1>
+<h1>unit_test<a class="headerlink" href="#unit-test" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
