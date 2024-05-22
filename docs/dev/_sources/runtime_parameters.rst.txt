@@ -20,7 +20,7 @@ namespace: none
 namespace: ``conductivity``
 ---------------------------
 
-**CONDUCTIVITY=constant:**
+**CONDUCTIVITY_DIR=constant:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -30,7 +30,7 @@ namespace: ``conductivity``
 
 
 
-**CONDUCTIVITY=constant_opacity:**
+**CONDUCTIVITY_DIR=constant_opacity:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -40,7 +40,7 @@ namespace: ``conductivity``
 
 
 
-**CONDUCTIVITY=powerlaw:**
+**CONDUCTIVITY_DIR=powerlaw:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -55,7 +55,7 @@ namespace: ``conductivity``
 namespace: ``eos``
 ------------------
 
-**EOS=breakout:**
+**EOS_DIR=breakout:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -65,7 +65,7 @@ namespace: ``eos``
 
 
 
-**EOS=gamma_law:**
+**EOS_DIR=gamma_law:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -77,7 +77,7 @@ namespace: ``eos``
 
 
 
-**EOS=helmholtz:**
+**EOS_DIR=helmholtz:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -99,7 +99,7 @@ namespace: ``eos``
 
 
 
-**EOS=multigamma:**
+**EOS_DIR=multigamma:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -121,7 +121,7 @@ namespace: ``eos``
 
 
 
-**EOS=polytrope:**
+**EOS_DIR=polytrope:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -137,7 +137,7 @@ namespace: ``eos``
 
 
 
-**EOS=primordial_chem:**
+**EOS_DIR=primordial_chem:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -231,7 +231,7 @@ namespace: ``eos``
 
 
 
-**EOS=rad_power_law:**
+**EOS_DIR=rad_power_law:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -245,7 +245,7 @@ namespace: ``eos``
 
 
 
-**EOS=tillotson:**
+**EOS_DIR=tillotson:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -379,7 +379,7 @@ namespace: ``integrator``
 
 
 
-**INTEGRATOR=BackwardEuler:**
+**INTEGRATOR_DIR=BackwardEuler:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -393,7 +393,7 @@ namespace: ``integrator``
 
 
 
-**INTEGRATOR=ForwardEuler:**
+**INTEGRATOR_DIR=ForwardEuler:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -403,7 +403,7 @@ namespace: ``integrator``
 
 
 
-**INTEGRATOR=QSS:**
+**INTEGRATOR_DIR=QSS:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -431,7 +431,7 @@ namespace: ``integrator``
 
 
 
-**INTEGRATOR=RKC:**
+**INTEGRATOR_DIR=RKC:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -447,7 +447,7 @@ namespace: ``integrator``
 
 
 
-**INTEGRATOR=VODE:**
+**INTEGRATOR_DIR=VODE:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -458,7 +458,7 @@ namespace: ``integrator``
 
 
 
-**NETWORK=rprox:**
+**NETWORK_DIR=rprox:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -477,7 +477,7 @@ namespace: ``integrator``
 
 
 
-**NETWORK=triple_alpha_plus_cago:**
+**NETWORK_DIR=triple_alpha_plus_cago:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -530,7 +530,7 @@ namespace: ``network``
 
 
 
-**NETWORK=ase:**
+**NETWORK_DIR=ase:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -542,7 +542,7 @@ namespace: ``network``
 
 
 
-**NETWORK=powerlaw:**
+**NETWORK_DIR=powerlaw:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -562,7 +562,7 @@ namespace: ``network``
 
 
 
-**NETWORK=primordial_chem:**
+**NETWORK_DIR=primordial_chem:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -575,7 +575,7 @@ namespace: ``network``
 
 
 
-**NETWORK=subch_approx:**
+**NETWORK_DIR=subch_approx:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -587,7 +587,7 @@ namespace: ``network``
 
 
 
-**NETWORK=subch_base:**
+**NETWORK_DIR=subch_base:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -599,7 +599,7 @@ namespace: ``network``
 
 
 
-**NETWORK=subch_full:**
+**NETWORK_DIR=subch_full:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
@@ -611,7 +611,7 @@ namespace: ``network``
 
 
 
-**NETWORK=subch_simple:**
+**NETWORK_DIR=subch_simple:**
 
 +---------------------------------------+---------------------------------------------------------+------------------------------+
 | parameter                             | description                                             | default value                |
