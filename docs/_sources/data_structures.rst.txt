@@ -70,7 +70,7 @@ the user will only need to fill/use the following information:
    derive the temperature via the EOS.
 
    Upon exit of the integration, the initial internal energy (offset)
-   is subtracted off, and e now represents the specifc nuclear
+   is subtracted off, and e now represents the specific nuclear
    energy release from the reactions.
 
 * ``burn_state.xn[]``: the mass fractions
@@ -94,8 +94,6 @@ raw reaction rate information (usually just the temperature-dependent
 terms) between various subroutines. It does not come out of the
 network-specific righthand side or Jacobian routines.
 
-You can see their definitions in ``networks/rate_type.H``.
-
 ``burn_type.H``
 ---------------
 
@@ -107,7 +105,7 @@ to access the different components of the state:
 
    It is assumed that the first ``nspec`` are the species.
 
-* ``net_ienuc`` : the index of the specifc internal energy in the solution vector
+* ``net_ienuc`` : the index of the specific internal energy in the solution vector
 
 Integrators
 ===========
@@ -128,4 +126,3 @@ state to an ``eos_t`` state, and back. Only the thermodynamic
 variables that are common in the two types are copied. This is
 useful, for example, if you have a burn_t state and what to get
 thermodynamic information by calling the EOS.
-
