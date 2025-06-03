@@ -112,7 +112,7 @@ void main_main ()
     DistributionMapping dm(ba);
 
     // we allocate our main multifabs
-    MultiFab state(ba, dm, vars.n_plot_comps, Nghost);
+    MultiFab state(ba, dm, vars.n_plot_comps, Nghost, amrex::MFInfo().SetArena(amrex::The_Managed_Arena()));
 
     // Initialize the state to zero; we will fill
     // it in below in do_eos.
@@ -141,6 +141,33 @@ void main_main ()
       Array4<Real> const sp = state.array(mfi);
 
       neut_test_C(bx, dlogrho, dlogT, dmetal, vars, sp);
+
+#ifdef AMREX_USE_GPU
+      // check that sneut5 works when called from the host as well, just in case
+      amrex::Dim3 cell{n_cell-1, n_cell-1, 0};
+      if (bx.contains(cell)) {
+        Real temp_zone = sp(cell, vars.itemp);
+        Real dens_zone = sp(cell, vars.irho);
+        Real abar = 1.0_rt / (0.75_rt / 1 + 0.25_rt / 4);
+        Real zbar = abar * (1 * 0.75_rt / 1 + 2 * 0.25_rt / 4);
+
+        Real snu;
+        Real dsnudt;
+        Real dsnudd;
+        Real dsnuda;
+        Real dsnudz;
+
+        constexpr int do_derivatives{1};
+
+        sneut5<do_derivatives>(temp_zone, dens_zone, abar, zbar,
+                               snu, dsnudt, dsnudd, dsnuda, dsnudz);
+
+        AMREX_ASSERT(sp(cell, vars.isneut) == snu);
+        AMREX_ASSERT(sp(cell, vars.isneutdt) == dsnudt);
+        AMREX_ASSERT(sp(cell, vars.isneutda) == dsnuda);
+        AMREX_ASSERT(sp(cell, vars.isneutdz) == dsnudz);
+      }
+#endif
 
     }
 
