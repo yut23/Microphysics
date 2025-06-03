@@ -12,12 +12,12 @@ using namespace amrex::literals;
 namespace nu_constants {
 
     // numerical constants
-    AMREX_GPU_DEVICE constexpr amrex::Real fac1   = 5.0e0_rt * M_PI / 3.0e0_rt;
-    AMREX_GPU_DEVICE constexpr amrex::Real fac2   = 10.0e0_rt * M_PI;
-    AMREX_GPU_DEVICE constexpr amrex::Real fac3   = M_PI / 5.0e0_rt;
-    AMREX_GPU_DEVICE constexpr amrex::Real oneth  = 1.0e0_rt/3.0e0_rt;
-    AMREX_GPU_DEVICE constexpr amrex::Real twoth  = 2.0e0_rt/3.0e0_rt;
-    AMREX_GPU_DEVICE constexpr amrex::Real sixth  = 1.0e0_rt/6.0e0_rt;
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real fac1() { return 5.0e0_rt * M_PI / 3.0e0_rt; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real fac2() { return 10.0e0_rt * M_PI; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real fac3() { return M_PI / 5.0e0_rt; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real oneth() { return 1.0e0_rt/3.0e0_rt; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real twoth() { return 2.0e0_rt/3.0e0_rt; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real sixth() { return 1.0e0_rt/6.0e0_rt; }
 
     // theta is sin**2(theta_weinberg) = 0.2319 plus/minus 0.00005 (1996)
     // xnufam is the number of neutrino flavors = 3.02 plus/minus 0.005 (1998)
@@ -32,10 +32,10 @@ namespace nu_constants {
     constexpr amrex::Real cap    = 1.0e0_rt - ca;
     constexpr amrex::Real tfac1  = cv*cv + ca*ca + (xnufam-1.0e0_rt) * (cvp*cvp+cap*cap);
     constexpr amrex::Real tfac2  = cv*cv - ca*ca + (xnufam-1.0e0_rt) * (cvp*cvp - cap*cap);
-    AMREX_GPU_DEVICE constexpr amrex::Real tfac3  = tfac2/tfac1;
-    AMREX_GPU_DEVICE constexpr amrex::Real tfac4  = 0.5e0_rt * tfac1;
-    AMREX_GPU_DEVICE constexpr amrex::Real tfac5  = 0.5e0_rt * tfac2;
-    AMREX_GPU_DEVICE constexpr amrex::Real tfac6  = cv*cv + 1.5e0_rt*ca*ca + (xnufam - 1.0e0_rt)*(cvp*cvp + 1.5e0_rt*cap*cap);
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real tfac3() { return tfac2/tfac1; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real tfac4() { return 0.5e0_rt * tfac1; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real tfac5() { return 0.5e0_rt * tfac2; }
+    AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE constexpr amrex::Real tfac6() { return cv*cv + 1.5e0_rt*ca*ca + (xnufam - 1.0e0_rt)*(cvp*cvp + 1.5e0_rt*cap*cap); }
 
 }
 
@@ -220,7 +220,7 @@ sneutf_t<number_t> get_sneut_factors(const amrex::Real den, const number_t& temp
     sf.rm     = den * sf.ye;
 
     number_t a0 = sf.rm * 1.0e-9_rt;
-    number_t a1 = admath::pow(a0, nu_constants::oneth);
+    number_t a1 = admath::pow(a0, nu_constants::oneth());
     sf.zeta = a1 * sf.xlm1;
 
     sf.zeta2 = sf.zeta * sf.zeta;
@@ -284,7 +284,7 @@ number_t nu_pair(const sneutf_t<number_t>& sf) {
     number_t spair = a1 * fpair;
     spair *= gl;
 
-    a1 = nu_constants::tfac4 * (1.0e0_rt + nu_constants::tfac3 * qpair);
+    a1 = nu_constants::tfac4() * (1.0e0_rt + nu_constants::tfac3() * qpair);
     spair *= a1;
 
     return spair;
@@ -300,7 +300,7 @@ number_t nu_plasma(const sneutf_t<number_t>& sf) {
     // equation 4.6
 
     number_t a1 = 1.019e-6_rt * sf.rm;
-    number_t a2 = admath::pow(a1, nu_constants::twoth);
+    number_t a2 = admath::pow(a1, nu_constants::twoth());
 
     number_t b1 = admath::sqrt(1.0e0_rt + a2);
 
@@ -328,8 +328,8 @@ number_t nu_plasma(const sneutf_t<number_t>& sf) {
     number_t cc = admath::log10(2.0e0_rt * sf.rm);
     number_t xlnt = admath::log10(sf.temp);
 
-    number_t xnum = nu_constants::sixth * (17.5e0_rt + cc - 3.0e0_rt * xlnt);
-    number_t xden = nu_constants::sixth * (-24.5e0_rt + cc + 3.0e0_rt * xlnt);
+    number_t xnum = nu_constants::sixth() * (17.5e0_rt + cc - 3.0e0_rt * xlnt);
+    number_t xden = nu_constants::sixth() * (-24.5e0_rt + cc + 3.0e0_rt * xlnt);
 
     // equation 4.11
     number_t fxy;
@@ -514,7 +514,7 @@ number_t nu_photo(const sneutf_t<number_t>& sf) {
 
     // equation 3.7
 
-    const auto [sin1, cos1] = admath::sincos(nu_constants::fac1 * tau);
+    const auto [sin1, cos1] = admath::sincos(nu_constants::fac1() * tau);
 
     // double, triple, etc. angle formulas
     // sin/cos (2 fac1 tau)
@@ -534,7 +534,7 @@ number_t nu_photo(const sneutf_t<number_t>& sf) {
     const number_t cos5 = cos1 * (cos1 * cos1 * (16.0_rt * cos1 * cos1 - 20.0_rt) + 5.0_rt);
 
     // cos (10 pi tau)
-    const number_t last = admath::cos(nu_constants::fac2 * tau);
+    const number_t last = admath::cos(nu_constants::fac2() * tau);
 
     number_t a0 = 0.5e0_rt * c00
         + c01 * cos1 + dd01 * sin1 + c02 * cos2 + dd02 * sin2
@@ -578,7 +578,7 @@ number_t nu_photo(const sneutf_t<number_t>& sf) {
 
     sphot *= sf.rm;
 
-    sphot *= nu_constants::tfac4 * (1.0e0_rt - nu_constants::tfac3 * qphot);
+    sphot *= nu_constants::tfac4() * (1.0e0_rt - nu_constants::tfac3() * qphot);
 
     if (sphot <= 0.0_rt) {
        sphot   = 0.0e0_rt;
@@ -610,7 +610,7 @@ number_t nu_brem(const sneutf_t<number_t>& sf) {
     number_t t8m3    = t8m2*t8m1;
     number_t t8m5    = t8m3*t8m2;
 
-    number_t tfermi = 5.9302e9_rt * (admath::sqrt(1.0e0_rt + 1.018e0_rt * admath::pow(den6 * sf.ye, nu_constants::twoth)) - 1.0e0_rt);
+    number_t tfermi = 5.9302e9_rt * (admath::sqrt(1.0e0_rt + 1.018e0_rt * admath::pow(den6 * sf.ye, nu_constants::twoth())) - 1.0e0_rt);
 
     number_t sbrem{};
 
@@ -661,7 +661,7 @@ number_t nu_brem(const sneutf_t<number_t>& sf) {
         // equation 5.1
         dum = 0.5738e0_rt * sf.zbar * sf.ye * t86 * sf.den;
 
-        z = nu_constants::tfac4 * fbrem - nu_constants::tfac5 * gbrem;
+        z = nu_constants::tfac4() * fbrem - nu_constants::tfac5() * gbrem;
         sbrem = dum * z;
 
     } else {
@@ -669,7 +669,7 @@ number_t nu_brem(const sneutf_t<number_t>& sf) {
         // liquid metal with c12 parameters (not too different for other elements)
         // equation 5.18 and 5.16
 
-        amrex::Real u = nu_constants::fac3 * (std::log10(sf.den) - 3.0e0_rt);
+        amrex::Real u = nu_constants::fac3() * (std::log10(sf.den) - 3.0e0_rt);
 
         // compute the expensive trig functions of equation 5.21 only once
 
@@ -723,10 +723,10 @@ number_t nu_brem(const sneutf_t<number_t>& sf) {
             + 0.00031e0_rt * cos4 - 0.00018e0_rt * sin4
             + 0.00069e0_rt * cos5;
 
-        number_t dum = 2.275e-1_rt * sf.zbar * sf.zbar * t8m1 * admath::pow(den6*sf.abari, nu_constants::oneth);
+        number_t dum = 2.275e-1_rt * sf.zbar * sf.zbar * t8m1 * admath::pow(den6*sf.abari, nu_constants::oneth());
 
         number_t gm1 = 1.0e0_rt / dum;
-        number_t gm13 = admath::pow(gm1, nu_constants::oneth);
+        number_t gm13 = admath::pow(gm1, nu_constants::oneth());
         number_t gm23 = gm13 * gm13;
 
         // equation 5.25 and 5.26
@@ -742,7 +742,7 @@ number_t nu_brem(const sneutf_t<number_t>& sf) {
         // equation 5.17
         dum = 0.5738e0_rt * sf.zbar * sf.ye * t86 * sf.den;
 
-        number_t z  = nu_constants::tfac4*fliq - nu_constants::tfac5*gliq;
+        number_t z  = nu_constants::tfac4()*fliq - nu_constants::tfac5()*gliq;
         sbrem = dum * z;
     }
     return sbrem;
@@ -818,7 +818,7 @@ number_t nu_recomb(const sneutf_t<number_t>& sf) {
         dum   = 1.0e0_rt + z;
         tmp   = 1.0e0_rt/dum;
 
-        sreco   = nu_constants::tfac6 * 2.649e-18_rt * sf.ye * amrex::Math::powi<13>(sf.zbar) * sf.den * bigj * tmp;
+        sreco   = nu_constants::tfac6() * 2.649e-18_rt * sf.ye * amrex::Math::powi<13>(sf.zbar) * sf.den * bigj * tmp;
     }
     return sreco;
 
