@@ -158,12 +158,7 @@ void main_main ()
         Real abar = 1.0_rt / (0.75_rt / 1 + 0.25_rt / 4);
         Real zbar = abar * (1 * 0.75_rt / 1 + 2 * 0.25_rt / 4);
 
-        Real snu;
-        Real dsnudt;
-        Real dsnudd;
-        Real dsnuda;
-        Real dsnudz;
-
+        Real snu, dsnudt, dsnudd, dsnuda, dsnudz;
         constexpr int do_derivatives{1};
 
         sneut5<do_derivatives>(temp_zone, dens_zone, abar, zbar,
