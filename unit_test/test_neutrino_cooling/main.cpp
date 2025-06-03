@@ -169,10 +169,24 @@ void main_main ()
         sneut5<do_derivatives>(temp_zone, dens_zone, abar, zbar,
                                snu, dsnudt, dsnudd, dsnuda, dsnudz);
 
-        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneut) == snu);
-        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneutdt) == dsnudt);
-        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneutda) == dsnuda);
-        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneutdz) == dsnudz);
+        auto check_value = [=] (int idx, Real actual, const char* name) {
+          Real expected = host_sp(cell, idx);
+          Real rel_diff = std::abs((expected - actual) / expected);
+          const Real tol = 1.0e-15_rt;
+          if (rel_diff > tol) {
+            std::cerr << "values for " << name << " don't match to within tolerance:\n"
+              << std::setprecision(17)
+              << "  device: " << expected << "\n"
+              << "  host:   " << actual << "\n"
+              << "  rel. diff: " << rel_diff << "\n";
+          }
+          AMREX_ALWAYS_ASSERT(rel_diff <= tol);
+        };
+
+        check_value(vars.isneut, snu, "snu");
+        check_value(vars.isneutdt, dsnudt, "dsnudt");
+        check_value(vars.isneutda, dsnuda, "dsnuda");
+        check_value(vars.isneutdz, dsnudz, "dsnudz");
       }
 #endif
 
