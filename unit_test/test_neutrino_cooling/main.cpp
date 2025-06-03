@@ -169,10 +169,10 @@ void main_main ()
         sneut5<do_derivatives>(temp_zone, dens_zone, abar, zbar,
                                snu, dsnudt, dsnudd, dsnuda, dsnudz);
 
-        AMREX_ASSERT(host_sp(cell, vars.isneut) == snu);
-        AMREX_ASSERT(host_sp(cell, vars.isneutdt) == dsnudt);
-        AMREX_ASSERT(host_sp(cell, vars.isneutda) == dsnuda);
-        AMREX_ASSERT(host_sp(cell, vars.isneutdz) == dsnudz);
+        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneut) == snu);
+        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneutdt) == dsnudt);
+        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneutda) == dsnuda);
+        AMREX_ALWAYS_ASSERT(host_sp(cell, vars.isneutdz) == dsnudz);
       }
 #endif
 
